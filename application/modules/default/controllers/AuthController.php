@@ -31,15 +31,20 @@ class AuthController extends Zend_Controller_Action
             if ($form->isValid($rawFormData)) {
                 $validatedData = $form->getValidValues($rawFormData);                                                                
                 $passwordHash = $this->_getPasswordHash($rawFormData['password']);
-                
-                $adapter = $this->_getAuthAdapter();
-                $adapter->setIdentity($validatedData['email']);
-                $adapter->setCredential($passwordHash);
+
+                $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+                $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
+
+                $authAdapter->setTableName('customers')
+                            ->setIdentityColumn('email')
+                            ->setCredentialColumn('password');
+                $authAdapter->setIdentity($validatedData['email']);
+                $authAdapter->setCredential($passwordHash);
                 
                 $auth = Zend_Auth::getInstance();
-                $result = $auth->authenticate($adapter);
+                $result = $auth->authenticate($authAdapter);
                 if ($result->isValid()) {
-                    $user = $adapter->getResultRowObject();
+                    $user = $authAdapter->getResultRowObject();
                     $auth->getStorage()->write($user);                    
                     
                     $this->_helper->layout()->disableLayout(); 
@@ -103,17 +108,6 @@ class AuthController extends Zend_Controller_Action
         $hmac = new Zend_Crypt_Hmac();
         return $hmac->compute(Bootstrap::HMAC_KEY, 'sha256', $password);
     }
-
-    protected function _getAuthAdapter(){
-        $dbAdapter = Zend_Db_Table::getDefaultAdapter();
-        $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
-        
-        $authAdapter->setTableName('customers')
-                    ->setIdentityColumn('email')
-                    ->setCredentialColumn('password');
-
-        return $authAdapter;
-    }    
 
 }
 

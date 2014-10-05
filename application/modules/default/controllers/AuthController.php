@@ -1,10 +1,9 @@
 <?php
 /**
  * Custom Sign Up and Login/Logout (required) 
-    1) Customers must be able to create an account to maintain an identity on your site. Record at 
-    least the following items:
-     * Username, First Name, Last Name, Email Address, Password
-    2) Customers must be able to login to the site and be given a session. Once logged in customers 
+[X] 1) Customers must be able to create an account to maintain an identity on your site. Record at 
+    least the following items: Username, First Name, Last Name, Email Address, Password
+[X] 2) Customers must be able to login to the site and be given a session. Once logged in customers 
     should be able to logout by clicking a link or button labeled “logout”. 
  */
 class AuthController extends Zend_Controller_Action

@@ -1,4 +1,4 @@
-body,html { margin: 0 5px; font-family: Verdana,sans-serif; }
+body { margin: auto; width: 960px; }
 h1 { font-size: 1.4em; color: #008000; }
 a { color: #008000; }
 

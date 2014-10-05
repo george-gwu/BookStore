@@ -1,4 +1,5 @@
 <?php 
+$auth = Zend_Auth::getInstance();
 $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
 $this->headTitle()->setSeparator(' - ');
 $this->headTitle('Paper Free Books');
@@ -6,14 +7,23 @@ $this->headTitle('Paper Free Books');
 echo $this->doctype(); ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
 <head>
-    <?php echo $this->headMeta(); ?> 
-    <?php echo $this->headTitle(); ?>
-    <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/css/site.css'); ?> 
+    <?= $this->headMeta(); ?> 
+    <?= $this->headTitle(); ?>
+    <?= $this->headLink()->prependStylesheet($this->baseUrl().'/css/site.css'); ?> 
 </head>
 <body>
+<div id="auth">
+    <?php if($auth->hasIdentity()): ?>
+    <?= $auth->getIdentity()->firstName; ?> <?= $auth->getIdentity()->lastName; ?> |
+    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'logout')); ?>">Logout</a>    
+    <?php else: ?>
+        <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'register')); ?>">Register</a> | 
+        <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'login')); ?>">Login</a>
+    <?php endif; ?>    
+</div>
 <div id="content">
-    <h1><?php echo $this->escape($this->title); ?></h1>
-    <?php echo $this->layout()->content; ?>
+    <h1><?= $this->escape($this->title); ?></h1>
+    <?= $this->layout()->content; ?>
 </div>
 </body>
 </html>

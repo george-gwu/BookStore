@@ -35,6 +35,12 @@ class Application_Model_DbTable_Categories extends Zend_Db_Table_Abstract
     {
         $this->delete('id =' . (int)$id);
     }
-
+/**
+ * CREATE TABLE  `bookstore`.`categories` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `categoryName` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+ */
 }
 

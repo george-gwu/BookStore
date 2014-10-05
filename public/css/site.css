@@ -10,3 +10,6 @@ td, th { padding-right: 5px; }
 form dt { width: 100px; display: block; float: left; clear: left; }
 form dd { margin-left: 0; float: left; }
 form #submitbutton { margin-left: 100px; }
+
+#auth { float:right;}
+#content { clear:both;}

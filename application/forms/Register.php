@@ -28,9 +28,7 @@ class Application_Form_Register extends Zend_Form
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
               ->addValidator('EmailAddress')
-              ->addValidator('NotEmpty')
-              ->addValidator('StringLength', false, array(null,128))
-              ->addErrorMessage('You must provide a valid email address.');
+              ->addValidator('StringLength', false, array(null,128));
         
         $password1 = new Zend_Form_Element_Password('password1');
         $password1->setLabel('Password')

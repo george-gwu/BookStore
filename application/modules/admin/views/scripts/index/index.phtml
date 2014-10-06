@@ -2,3 +2,7 @@
 $this->title = "Welcome to Admin!";
 $this->headTitle($this->title);
 ?>
+
+<ul>
+    <li><a href='<?= $this->url(array('controller'=>'category')); ?>'>Manage Categories</a></li>
+</ul>

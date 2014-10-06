@@ -2,15 +2,12 @@
 
 class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'customers';
-    
-    const ROLE_ADMIN = 9;
-    const ROLE_USER = 0;
+    protected $_name = 'customers';   
 
     
     public function registerCustomer($email, $firstName, $lastName, $password){
         $data = array(
-            'roleType'      => self::ROLE_USER,
+            'roleType'      => App_Acl::ROLE_USER,
             'email'         => $email,
             'firstName'     => $firstName,
             'lastName'      => $lastName,

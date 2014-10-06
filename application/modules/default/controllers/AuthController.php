@@ -18,6 +18,11 @@ class AuthController extends Zend_Controller_Action
     {
         
     }
+    
+    public function noauthAction()
+    {
+        
+    }
    
     
     public function loginAction(){

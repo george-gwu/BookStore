@@ -24,8 +24,9 @@ class Admin_CategoryController extends Zend_Controller_Action
             $formData = $this->getRequest()->getPost();
             if ($form->isValid($formData)) {
                 $categoryName = $form->getValue('categoryName');
-                $categories = new Application_Model_DbTable_Categories();
-                $categories->addCategory($categoryName);
+                
+                $categoriesDb = new Application_Model_DbTable_Categories();
+                $categoriesDb->addCategory($categoryName);
                 
                 $this->_helper->redirector('index');
             } else {
@@ -46,8 +47,9 @@ class Admin_CategoryController extends Zend_Controller_Action
             if ($form->isValid($formData)) {
                 $id = (int)$form->getValue('id');
                 $categoryName = $form->getValue('categoryName');
-                $categories = new Application_Model_DbTable_Categories();
-                $categories->updateCategory($id, $categoryName);
+                
+                $categoriesDb = new Application_Model_DbTable_Categories();
+                $categoriesDb->updateCategory($id, $categoryName);
                 
                 $this->_helper->redirector('index');
             } else {
@@ -56,8 +58,8 @@ class Admin_CategoryController extends Zend_Controller_Action
         } else {
             $id = $this->_getParam('id', 0);
             if ($id > 0) {
-                $categories = new Application_Model_DbTable_Categories();
-                $form->populate($categories->getCategory($id));
+                $categoriesDb = new Application_Model_DbTable_Categories();
+                $form->populate($categoriesDb->getCategory($id));
             }
         }
         
@@ -69,14 +71,15 @@ class Admin_CategoryController extends Zend_Controller_Action
             $del = $this->getRequest()->getPost('del');
             if ($del == 'Yes') {
                 $id = $this->getRequest()->getParam('id');
-                $categories = new Application_Model_DbTable_Categories();
-                $categories->deleteCategory($id);
+                
+                $categoriesDb = new Application_Model_DbTable_Categories();
+                $categoriesDb->deleteCategory($id);
             }
             $this->_helper->redirector('index');
         } else {
             $id = $this->_getParam('id', 0);
-            $categories = new Application_Model_DbTable_Categories();
-            $this->view->category = $categories->getCategory($id);
+            $categoriesDb = new Application_Model_DbTable_Categories();
+            $this->view->category = $categoriesDb->getCategory($id);
         }
     }
 

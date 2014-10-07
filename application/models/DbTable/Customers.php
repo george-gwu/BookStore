@@ -125,15 +125,24 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
                                                 'vector'              => null 
                                     ));
     }
-    
+    /**
+     * Get a decrypt filter chained with a Null Byte StringTrim Filter because CBC mode pads with null bytes.
+     * @param type $vector
+     * @return \Zend_Filter_Decrypt
+     */
     protected function _getDecryptFilter($vector){
-        return new Zend_Filter_Decrypt(array(   'adapter'             => 'mcrypt',
+        $chainFilter = new Zend_Filter();
+        
+        $chainFilter->appendFilter(new Zend_Filter_Decrypt(array(   'adapter'             => 'mcrypt',
                                                 'key'                 => Bootstrap::AES_KEY,
                                                 'algorithm'           => 'rijndael-128',
                                                 'mode'                => 'cbc',
                                                 'salt'                => true,
                                                 'vector'              => $vector 
-                                    ));
+                                    )));
+        $chainFilter->appendFilter(new Zend_Filter_Callback(array('callback' => 'rtrim', 'options'  => array('key' => "\0"))));                 
+        
+        return $chainFilter;
     }    
 
     /*** 

@@ -18,6 +18,123 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
         $userID = $this->getAdapter()->lastInsertId();
         return $userID;        
     }
+    
+    /**
+     * Adds OTFE when persisting in DB
+     * @param type $userID
+     * @param type $cardName
+     * @param type $cardNumber
+     * @param type $expiration
+     * @param type $securityCode
+     */
+    public function updateCreditCard($userID, $cardName, $cardNumber, $expiration, $securityCode){
+        $cryptFilter = $this->_getEncryptFilter();
+        
+        $vector = $cryptFilter->getVector();
+        
+        $encryptedCardName = $cryptFilter->filter($cardName);
+        $encryptedCardNumber = $cryptFilter->filter($cardNumber);
+        $encryptedExpiration = $cryptFilter->filter($expiration);
+        $encryptedSecurityCode = $cryptFilter->filter($securityCode);
+        
+        $data = array(
+                    'encryptedCardName'         => $encryptedCardName,
+                    'encryptedCardNumber'       => $encryptedCardNumber,
+                    'encryptedCardExpiration'   => $encryptedExpiration,
+                    'encryptedCardSecurityCode' => $encryptedSecurityCode,
+                    'encryptVector'             => $vector
+        );
+        
+        $where = $this->getAdapter()->quoteInto('id = ?', $userID);
+        
+        $this->update($data, $where);
+    }
+    
+    /**
+     * Uses OTFE when retrieving from DB
+     * @param type $userID
+     * @return type
+     */
+    public function getCreditCard($userID){
+        $select = $this->select()->where('id <= ?', $userID);
+
+	$dbResult = $this->fetchRow($select);
+        
+        if(empty($dbResult['encryptVector'])) return array(); //no stored card on file
+        
+        $cryptFilter = $this->_getDecryptFilter($dbResult['encryptVector']);
+
+        $data = array(
+            'cardname'         => $cryptFilter->filter($dbResult['encryptedCardName']),
+            'cardnumber'       => $cryptFilter->filter($dbResult['encryptedCardNumber']),
+            'cardexpiration'   => $cryptFilter->filter($dbResult['encryptedCardExpiration']),
+            'cardsecurity'     => $cryptFilter->filter($dbResult['encryptedCardSecurityCode'])
+        );
+        
+        return $data;
+    }
+    
+    /**
+     * 
+     * @param type $userID 
+     * @param type $type BILLING/SHIPPING/BOTH
+     * @param type $address1
+     * @param type $address2
+     * @param type $city
+     * @param type $state
+     * @param type $country
+     * @param type $zipcode
+     */
+    public function updateAddress($userID, $type, $address1, $address2, $city, $state, $country, $zipcode){
+        $data=array();
+        
+        if($type=='SHIPPING' or $type=='BOTH'){
+            $data['shippingAddress1'] = $address1;
+            $data['shippingAddress2'] = $address2;
+            $data['shippingCity'] = $city;
+            $data['shippingState'] = $state;
+            $data['shippingCountry'] = $country;
+            $data['shippingZipcode'] = $zipcode;
+        }
+        
+        if($type=='BILLING' or $type=='BOTH'){
+            $data['bilingAddress1'] = $address1;
+            $data['bilingAddress2'] = $address2;
+            $data['bilingCity'] = $city;
+            $data['bilingState'] = $state;
+            $data['bilingCountry'] = $country;
+            $data['bilingZipcode'] = $zipcode;
+        }
+        
+        $where = $this->getAdapter()->quoteInto('id = ?', $userID);
+        
+        $this->update($data, $where);
+    }
+    
+    /**
+     * 
+     * @param type $vector Optional Vector (Randomly generated if null, but needs to be persisted)
+     * @return \Zend_Filter_Encrypt
+     */
+    protected function _getEncryptFilter($vector=null){
+        return new Zend_Filter_Encrypt(array(   'adapter'             => 'mcrypt',
+                                                'key'                 => Bootstrap::AES_KEY,
+                                                'algorithm'           => 'rijndael-128',
+                                                'mode'                => 'cbc',
+                                                'salt'                => true,
+                                                'vector'              => null 
+                                    ));
+    }
+    
+    protected function _getDecryptFilter($vector){
+        return new Zend_Filter_Decrypt(array(   'adapter'             => 'mcrypt',
+                                                'key'                 => Bootstrap::AES_KEY,
+                                                'algorithm'           => 'rijndael-128',
+                                                'mode'                => 'cbc',
+                                                'salt'                => true,
+                                                'vector'              => $vector 
+                                    ));
+    }    
 
     /*** 
      * CREATE TABLE  `bookstore`.`customers` (

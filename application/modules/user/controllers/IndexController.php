@@ -33,6 +33,42 @@ class User_IndexController extends Zend_Controller_Action
     {
         
     }
+    
+    public function profileAction(){
+        $creditCardForm = new Application_Form_CreditCard();
+        $creditCardForm->submit->setLabel('Save');
+        $this->view->creditCardForm = $creditCardForm;
+        
+        $auth = Zend_Auth::getInstance();
+        if($auth->hasIdentity()) {
+            $user = $auth->getIdentity();
+            $userID = $user->id;
+        } else { // failed, but shouldn't ever be possible since this module is authenticated
+            $this->_helper->redirector('index'); 
+            exit;
+        } 
+        
+        $customersDb = new Application_Model_DbTable_Customers();
+        
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+            if ($creditCardForm->isValid($formData)) {                                            
+                $customersDb->updateCreditCard( $userID, 
+                                                $creditCardForm->getValue('cardname'), 
+                                                $creditCardForm->getValue('cardnumber'), 
+                                                $creditCardForm->getValue('cardexpiration'), 
+                                                $creditCardForm->getValue('cardsecurity')
+                                            );                
+                
+//                $this->_helper->redirector('index');
+            } else {
+                $creditCardForm->populate($formData);
+            }
+        } else {
+            $data = $customersDb->getCreditCard($userID);
+            $creditCardForm->populate($data);            
+        }
+    }
 
 }
 

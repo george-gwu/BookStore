@@ -3,7 +3,8 @@
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 
-    const HMAC_KEY = "P@p3rFr33B00ks!!";
+    const HMAC_KEY = 'P@p3rFr33B00ks!!';
+    const AES_KEY = 'P@p3rFr33B00ks!!P@p3rFr33B00ks$$P@p3rFr33B00ks##';
     
     protected function _initPlugins(){
         $autoloader = Zend_Loader_Autoloader::getInstance();

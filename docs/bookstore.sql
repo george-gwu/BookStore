@@ -54,11 +54,12 @@ CREATE TABLE  `bookstore`.`customers` (
   `encryptedCardNumber` varchar(255) DEFAULT NULL,
   `encryptedCardExpiration` varchar(255) DEFAULT NULL,
   `encryptedCardSecurityCode` varchar(255) DEFAULT NULL,
+  `encryptVector` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-INSERT INTO `bookstore`.`customers` (`id`,`roleType`,`email`,`firstName`,`lastName`,`password`,`shippingAddress1`,`shippingAddress2`,`shippingCity`,`shippingState`,`shippingCountry`,`shippingZipcode`,`billingAddress1`,`billingAddress2`,`billingCity`,`billingState`,`billingCountry`,`billingZipcode`,`encryptedCardName`,`encryptedCardNumber`,`encryptedCardExpiration`,`encryptedCardSecurityCode`) VALUES 
- (1,9,'gschmick@gmail.com','George','Schmick','3e519932e7efd1250a78e9b2b4569cf0c0d68b80d9bf7e285d501a75c6222e20',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `bookstore`.`customers` (`id`,`roleType`,`email`,`firstName`,`lastName`,`password`,`shippingAddress1`,`shippingAddress2`,`shippingCity`,`shippingState`,`shippingCountry`,`shippingZipcode`,`billingAddress1`,`billingAddress2`,`billingCity`,`billingState`,`billingCountry`,`billingZipcode`,`encryptedCardName`,`encryptedCardNumber`,`encryptedCardExpiration`,`encryptedCardSecurityCode`,`encryptVector`) VALUES 
+ (1,9,'gschmick@gmail.com','George','Schmick','3e519932e7efd1250a78e9b2b4569cf0c0d68b80d9bf7e285d501a75c6222e20',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 DROP TABLE IF EXISTS `bookstore`.`events`;
 CREATE TABLE  `bookstore`.`events` (

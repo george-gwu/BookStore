@@ -40,16 +40,18 @@ class Inventory_Update_Form extends Zend_Form
 			->addFilter('StripTags')
 			->addFilter('StringTrim')
 			->addValidator('NotEmpty');
-			
+		
+		# This should be a drop down based on the category table, right?	
 		$category = new Zend_Form_Element_Text('category');
 		$category->setLabel('Item')
 			->setRequired(true)
 			->addFilter('StripTags')
 			->addFilter('StringTrim')
 			->addValidator('NotEmpty');
-$submit = new Zend_Form_Element_Submit('submit');
-$submit->setAttrib('id', 'submitbutton')
-->setLabel('Login');
-$this->addElements(array($email, $password, $submit));
-}
+
+	$submit = new Zend_Form_Element_Submit('submit');
+	$submit->setAttrib('inv', 'submitbutton')
+		->setLabel('Inventory Updates');
+	$this->addElements(array($itemName, $itemDescription, $price, $dateCreated, $quantity, $category, $submit));
+	}
 }

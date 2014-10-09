@@ -20,8 +20,29 @@ class Inventory_Update_Form extends Zend_Form
 			->addFilter('StringTrim')
 			->addValidator('NotEmpty');
 			
-			$itemName = new Zend_Form_Element_Text('itemName');
-		$itemName->setLabel('Item')
+		$price = new Zend_Form_Element_Text('price');
+		$price->setLabel('Price')
+			->setRequired(true)
+			->addFilter('StripTags')
+			->addFilter('StringTrim')
+			->addValidator('NotEmpty');
+			
+		$dateCreated = new Zend_Form_Element_Text('dateCreated');
+		$dateCreated->setLabel('Date Stocked')
+			->setRequired(true)
+			->addFilter('StripTags')
+			->addFilter('StringTrim')
+			->addValidator('NotEmpty');
+			
+		$quantity = new Zend_Form_Element_Text('quantity');
+		$quantity->setLabel('Quantity')
+			->setRequired(true)
+			->addFilter('StripTags')
+			->addFilter('StringTrim')
+			->addValidator('NotEmpty');
+			
+		$category = new Zend_Form_Element_Text('category');
+		$category->setLabel('Item')
 			->setRequired(true)
 			->addFilter('StripTags')
 			->addFilter('StringTrim')

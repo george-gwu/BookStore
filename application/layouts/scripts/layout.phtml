@@ -16,10 +16,10 @@ echo $this->doctype(); ?>
 </head>
 <body>
     <div class="yui3-g">
-        <div class="yui3-u-1">
+        <div class="yui3-u-23-24" id="header">
             <span style="float:right;">
                 <?php if($auth->hasIdentity()): ?>
-                    <?= $auth->getIdentity()->firstName; ?> <?= $auth->getIdentity()->lastName; ?> |
+                    <a href="<?= $this->url(array('module'=>'user', 'controller'=>'index', 'action'=>'profile')); ?>">Profile</a> |
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'logout')); ?>">Logout</a>    
                 <?php else: ?>
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'register')); ?>">Register</a> | 

@@ -39,6 +39,10 @@ class User_IndexController extends Zend_Controller_Action
         $creditCardForm->submit->setLabel('Save');
         $this->view->creditCardForm = $creditCardForm;
         
+        $addressForm = new Application_Form_Address();
+        $addressForm->submit->setLabel('Save');
+        $this->view->addressForm = $addressForm;
+        
         $auth = Zend_Auth::getInstance();
         if($auth->hasIdentity()) {
             $user = $auth->getIdentity();

@@ -25,54 +25,60 @@ class User_IndexController extends Zend_Controller_Action
 {
 
     public function init()
-    {
-        /* Initialize action controller here */
+    {        
+        $auth = Zend_Auth::getInstance();
+        if($auth->hasIdentity()) {
+            $user = $auth->getIdentity();
+            $this->userID = $user->id;
+        } else { // failed, but shouldn't ever be possible since this module is authenticated
+            $this->_helper->redirector('index', 'index', 'default'); 
+            exit;
+        }         
     }
 
-    public function indexAction()
-    {
-        
-    }
-    
-    public function profileAction(){
-        $creditCardForm = new Application_Form_CreditCard();
-        $creditCardForm->submit->setLabel('Save');
+    public function indexAction(){
+        if(Zend_Registry::isRegistered('creditcardform')){
+            $creditCardForm = Zend_Registry::get('creditcardform');
+        } else {
+            $creditCardForm = new Application_Form_CreditCard();
+            $customersDb = new Application_Model_DbTable_Customers();
+            $creditCardForm->populate($customersDb->getCreditCard($this->userID));            
+        }
         $this->view->creditCardForm = $creditCardForm;
+        $creditCardForm->setAction($this->_helper->url('savecreditcard'));
+        
+        
         
         $addressForm = new Application_Form_Address();
         $addressForm->submit->setLabel('Save');
         $this->view->addressForm = $addressForm;
         
-        $auth = Zend_Auth::getInstance();
-        if($auth->hasIdentity()) {
-            $user = $auth->getIdentity();
-            $userID = $user->id;
-        } else { // failed, but shouldn't ever be possible since this module is authenticated
-            $this->_helper->redirector('index'); 
-            exit;
-        } 
         
-        $customersDb = new Application_Model_DbTable_Customers();
         
+    }
+    
+    public function savecreditcardAction(){        
+        $creditCardForm = new Application_Form_CreditCard();
+                
         if ($this->getRequest()->isPost()) {
             $formData = $this->getRequest()->getPost();
             if ($creditCardForm->isValid($formData)) {                                            
-                $customersDb->updateCreditCard( $userID, 
+                $customersDb = new Application_Model_DbTable_Customers();
+                $customersDb->updateCreditCard( $this->userID, 
                                                 $creditCardForm->getValue('cardname'), 
                                                 $creditCardForm->getValue('cardnumber'), 
                                                 $creditCardForm->getValue('cardexpiration'), 
                                                 $creditCardForm->getValue('cardsecurity')
-                                            );                
-                
-//                $this->_helper->redirector('index');
+                                            );                                
             } else {
                 $creditCardForm->populate($formData);
+                Zend_Registry::set('creditcardform', $creditCardForm);
             }
-        } else {
-            $data = $customersDb->getCreditCard($userID);
-            $creditCardForm->populate($data);            
-        }
+        }   
+        
+        $this->_forward('index');
     }
+    
 
 }
 

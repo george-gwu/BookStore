@@ -56,11 +56,12 @@ class Application_Form_CreditCard extends Zend_Form
               ->setAttrib('size', 4)
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
-              ->addValidator('StringLength', false, array(3,4));
+              ->addValidator('Int')
+              ->addValidator('StringLength', false, array(3,4));               
         
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setAttrib('id', 'submitbutton')
-               ->setLabel('Login');
+               ->setLabel('Save');
 
         $this->addElements(array($cardname, $cardnumber, $cardexpiration, $cardsecurity, $submit));
     }

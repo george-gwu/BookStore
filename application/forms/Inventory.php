@@ -26,13 +26,10 @@ class Inventory_Update_Form extends Zend_Form
 			->addFilter('StripTags')
 			->addFilter('StringTrim')
 			->addValidator('NotEmpty');
-			
-		$dateCreated = new Zend_Form_Element_Text('dateCreated');
-		$dateCreated->setLabel('Date Stocked')
-			->setRequired(true)
-			->addFilter('StripTags')
-			->addFilter('StringTrim')
-			->addValidator('NotEmpty');
+		 
+		 
+		$date = new Zend_Date();
+    		$date->get(Zend_Date::ISO_8601);	
 			
 		$quantity = new Zend_Form_Element_Text('quantity');
 		$quantity->setLabel('Quantity')

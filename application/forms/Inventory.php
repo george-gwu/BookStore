@@ -23,8 +23,7 @@ class Inventory_Update_Form extends Zend_Form
 		$price = new Zend_Form_Element_Text('price');
 		$price->setLabel('Price')
 			->setRequired(true)
-			->addFilter('StripTags')
-			->addFilter('StringTrim')
+			->addValidator('Float')
 			->addValidator('NotEmpty');
 		 
 		 
@@ -34,10 +33,14 @@ class Inventory_Update_Form extends Zend_Form
 		$quantity = new Zend_Form_Element_Text('quantity');
 		$quantity->setLabel('Quantity')
 			->setRequired(true)
-			->addFilter('StripTags')
-			->addFilter('StringTrim')
+			->addValidator('Digits')
 			->addValidator('NotEmpty');
 		
+		
+$validator = new Zend_Validate_Int();
+$validator->isValid(1234);   // returns true
+
+
 		# This should be a drop down based on the category table, right?	
 		$category = new Zend_Form_Element_Text('category');
 		$category->setLabel('Item')

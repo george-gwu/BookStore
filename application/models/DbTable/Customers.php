@@ -93,6 +93,49 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
         return $data;
     }
     
+    
+    /**
+     * @param type $userID
+     * @return Shipping Address
+     */
+    public function getShippingAddress($userID){
+        $select = $this->select()->where('id <= ?', $userID);
+
+	$dbResult = $this->fetchRow($select);
+               
+        $data = array(
+            'address1'  =>   $dbResult['shippingAddress1'],
+            'address2'  =>   $dbResult['shippingAddress2'],
+            'city'      =>   $dbResult['shippingCity'],
+            'state'     =>   $dbResult['shippingState'],
+            'country'   =>   $dbResult['shippingCountry'],
+            'zipcode'   =>   $dbResult['shippingZipcode'],
+        );
+
+        return $data;
+    }
+    
+    /**
+     * @param type $userID
+     * @return Billing Address
+     */
+    public function getBillingAddress($userID){
+        $select = $this->select()->where('id <= ?', $userID);
+
+	$dbResult = $this->fetchRow($select);
+               
+        $data = array(
+            'address1'  =>   $dbResult['billingAddress1'],
+            'address2'  =>   $dbResult['billingAddress2'],
+            'city'      =>   $dbResult['billingCity'],
+            'state'     =>   $dbResult['billingState'],
+            'country'   =>   $dbResult['billingCountry'],
+            'zipcode'   =>   $dbResult['billingZipcode'],
+        );
+
+        return $data;
+    }    
+    
     /**
      * 
      * @param type $userID 
@@ -117,12 +160,12 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
         }
         
         if($type=='BILLING' or $type=='BOTH'){
-            $data['bilingAddress1'] = $address1;
-            $data['bilingAddress2'] = $address2;
-            $data['bilingCity'] = $city;
-            $data['bilingState'] = $state;
-            $data['bilingCountry'] = $country;
-            $data['bilingZipcode'] = $zipcode;
+            $data['billingAddress1'] = $address1;
+            $data['billingAddress2'] = $address2;
+            $data['billingCity'] = $city;
+            $data['billingState'] = $state;
+            $data['billingCountry'] = $country;
+            $data['billingZipcode'] = $zipcode;
         }
         
         $where = $this->getAdapter()->quoteInto('id = ?', $userID);

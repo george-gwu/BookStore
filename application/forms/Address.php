@@ -71,11 +71,10 @@ class Application_Form_Address extends Zend_Form
         
         $address2 = new Zend_Form_Element_Text('address2');
         $address2->setLabel('Address (Cont.)')
-              ->setRequired(true)
+              ->setRequired(false)
               ->setAttrib('size', 40)
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
-              ->addValidator('NotEmpty')
               ->addValidator('StringLength', false, array(null,128));        
         
         $city = new Zend_Form_Element_Text('city');

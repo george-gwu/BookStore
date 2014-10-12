@@ -37,20 +37,34 @@ class User_IndexController extends Zend_Controller_Action
     }
 
     public function indexAction(){
+        $customersDb = new Application_Model_DbTable_Customers();
+        
         if(Zend_Registry::isRegistered('creditcardform')){
             $creditCardForm = Zend_Registry::get('creditcardform');
         } else {
             $creditCardForm = new Application_Form_CreditCard();
-            $customersDb = new Application_Model_DbTable_Customers();
             $creditCardForm->populate($customersDb->getCreditCard($this->userID));            
             $creditCardForm->setAction($this->_helper->url('savecreditcard'));
         }
         $this->view->creditCardForm = $creditCardForm;                      
+                        
+        if(Zend_Registry::isRegistered('shippingform')){
+            $shipAddressForm = Zend_Registry::get('shippingform');
+        } else {
+            $shipAddressForm = new Application_Form_Address();            
+            $shipAddressForm->populate($customersDb->getShippingAddress($this->userID));            
+            $shipAddressForm->setAction($this->_helper->url('saveshipping'));
+        }
+        $this->view->shippingAddressForm = $shipAddressForm;      
         
-        $addressForm = new Application_Form_Address();        
-        $this->view->addressForm = $addressForm;
-                
-        
+        if(Zend_Registry::isRegistered('billingform')){
+            $billingAddressForm = Zend_Registry::get('billingform');
+        } else {
+            $billingAddressForm = new Application_Form_Address();            
+            $billingAddressForm->populate($customersDb->getBillingAddress($this->userID));            
+            $billingAddressForm->setAction($this->_helper->url('savebilling'));
+        }
+        $this->view->billingAddressForm = $billingAddressForm;          
         
         if(Zend_Registry::isRegistered('passwordform')){
             $passwordForm = Zend_Registry::get('passwordform');
@@ -62,6 +76,57 @@ class User_IndexController extends Zend_Controller_Action
         
         
     }
+    
+    public function savebillingAction(){        
+        $billingAddressForm = new Application_Form_Address();
+                
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+            if ($billingAddressForm->isValid($formData)) {                                            
+                $customersDb = new Application_Model_DbTable_Customers();
+                $customersDb->updateAddress($this->userID, 
+                                            'BILLING',
+                                            $billingAddressForm->getValue('address1'), 
+                                            $billingAddressForm->getValue('address2'), 
+                                            $billingAddressForm->getValue('city'), 
+                                            $billingAddressForm->getValue('state'),                        
+                                            $billingAddressForm->getValue('zipcode'), 
+                                            $billingAddressForm->getValue('country') 
+                                        );                                
+            } else {
+                $billingAddressForm->populate($formData);
+                Zend_Registry::set('billingform', $billingAddressForm);
+            }
+        }   
+        
+        $this->_forward('index');
+    }    
+    
+    public function saveshippingAction(){        
+        $shippingAddressForm = new Application_Form_Address();
+                
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+            if ($shippingAddressForm->isValid($formData)) {                                            
+                $customersDb = new Application_Model_DbTable_Customers();
+                $customersDb->updateAddress($this->userID, 
+                                            'SHIPPING',
+                                            $shippingAddressForm->getValue('address1'), 
+                                            $shippingAddressForm->getValue('address2'), 
+                                            $shippingAddressForm->getValue('city'), 
+                                            $shippingAddressForm->getValue('state'),                        
+                                            $shippingAddressForm->getValue('zipcode'), 
+                                            $shippingAddressForm->getValue('country') 
+                                        );                                
+            } else {
+                $shippingAddressForm->populate($formData);
+                Zend_Registry::set('shippingform', $shippingAddressForm);
+            }
+        }   
+        
+        $this->_forward('index');
+    }
+        
     
     public function savecreditcardAction(){        
         $creditCardForm = new Application_Form_CreditCard();

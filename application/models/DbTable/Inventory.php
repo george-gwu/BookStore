@@ -9,14 +9,13 @@
 
         protected $_name = 'inventory';
 
-        public function registerItem($itemName, $itemDescription, $price, $dateCreated, $quantity, $categoryID){
+        public function registerItem($itemName, $itemDescription, $price, $quantity, $categoryID){
             $data = array(
-                'roleType' => App_Acl::ROLEUSER,
+        /*        'roleType' => App_Acl::ROLEUSER,   May need admin accounts  */
                 'itemName' => $itemName,
                 'itemDescription' => $itemDescription,
                 'price' => $price,
-                'quantity' => $quantity,
-                'dateCreated' => $dateCreated
+                'quantity' => $quantity
             );
             $this->insert($data);
             $itemID = $this->getAdapter()->lastInsertId();

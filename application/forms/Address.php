@@ -115,7 +115,7 @@ class Application_Form_Address extends Zend_Form
         
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setAttrib('id', 'submitbutton')
-               ->setLabel('Register');
+               ->setLabel('Save');
 
         $this->addElements(array($address1, $address2, $city, $state, $country, $zipcode, $type, $submit));
         

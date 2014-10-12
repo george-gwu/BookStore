@@ -56,7 +56,7 @@ class Application_Form_CreditCard extends Zend_Form
               ->setAttrib('size', 4)
               ->addFilter('StripTags')
               ->addFilter('StringTrim')
-              ->addValidator('Int')
+              ->addValidator('Digits')
               ->addValidator('StringLength', false, array(3,4));               
         
         $submit = new Zend_Form_Element_Submit('submit');

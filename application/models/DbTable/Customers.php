@@ -51,6 +51,25 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
     }
     
     /**
+     *
+     * @param type $userID userID 
+     * @param type $password password to be hashed
+     */
+    public function updatePassword($userID, $password){        
+        
+        $hmac = new Zend_Crypt_Hmac();
+        $hashedPassword = $hmac->compute(Bootstrap::HMAC_KEY, 'sha256', $password);
+        
+        $data = array(
+                    'password' => $hashedPassword,
+        );
+        
+        $where = $this->getAdapter()->quoteInto('id = ?', $userID);
+        
+        $this->update($data, $where);
+    }
+    
+    /**
      * Uses OTFE when retrieving from DB
      * @param type $userID
      * @return type

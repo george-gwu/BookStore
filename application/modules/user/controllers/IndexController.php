@@ -43,16 +43,22 @@ class User_IndexController extends Zend_Controller_Action
             $creditCardForm = new Application_Form_CreditCard();
             $customersDb = new Application_Model_DbTable_Customers();
             $creditCardForm->populate($customersDb->getCreditCard($this->userID));            
+            $creditCardForm->setAction($this->_helper->url('savecreditcard'));
         }
-        $this->view->creditCardForm = $creditCardForm;
-        $creditCardForm->setAction($this->_helper->url('savecreditcard'));
+        $this->view->creditCardForm = $creditCardForm;                      
         
-        
-        
-        $addressForm = new Application_Form_Address();
-        $addressForm->submit->setLabel('Save');
+        $addressForm = new Application_Form_Address();        
         $this->view->addressForm = $addressForm;
+                
         
+        
+        if(Zend_Registry::isRegistered('passwordform')){
+            $passwordForm = Zend_Registry::get('passwordform');
+        } else {
+            $passwordForm = new Application_Form_Password();
+            $passwordForm->setAction($this->_helper->url('savepassword'));
+        }
+        $this->view->passwordForm = $passwordForm;       
         
         
     }
@@ -75,6 +81,25 @@ class User_IndexController extends Zend_Controller_Action
                 Zend_Registry::set('creditcardform', $creditCardForm);
             }
         }   
+        
+        $this->_forward('index');
+    }
+    
+    public function savepasswordAction(){        
+        $passwordForm = new Application_Form_Password();
+                
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+            if ($passwordForm->isValid($formData)) {                                            
+                $customersDb = new Application_Model_DbTable_Customers();
+                $customersDb->updatePassword( $this->userID, 
+                                                $passwordForm->getValue('password1')                                                
+                                            );           
+                $passwordForm = "Password changed!";
+            }
+            Zend_Registry::set('passwordform', $passwordForm);            
+        }   
+        
         
         $this->_forward('index');
     }

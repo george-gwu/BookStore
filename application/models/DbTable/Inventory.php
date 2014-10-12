@@ -6,7 +6,7 @@
 
         public function registerItem($itemName, $itemDescription, $price, $dateCreated, $quantity, $categoryID){
         $data = array(
-        'roleType' => App_Acl::CATEGORY,
+        'roleType' => App_Acl::ROLEUSER,
             'itemName' => $itemName,
             'itemDescription' => $itemDescription,
             'price' => $price,

@@ -38,6 +38,7 @@ class User_IndexController extends Zend_Controller_Action
 
     public function indexAction(){
         $customersDb = new Application_Model_DbTable_Customers();
+        $this->view->fullName = $this->user->firstName .' '. $this->user->lastName;
         
         if(Zend_Registry::isRegistered('creditcardform')){
             $creditCardForm = Zend_Registry::get('creditcardform');

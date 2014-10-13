@@ -1,0 +1,8 @@
+// Add the comment element
+        $this->addElement('textarea', 'comment', array(
+            'label'      => 'Please Leave a Customer Review:',
+            'required'   => true,
+            'validators' => array(
+                array('validator' => 'StringLength', 'options' => array(0, 1000))
+                )
+        ));

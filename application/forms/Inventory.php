@@ -23,35 +23,29 @@ class Inventory_Update_Form extends Zend_Form
 		$price = new Zend_Form_Element_Text('price');
 		$price->setLabel('Price')
 			->setRequired(true)
-			->addFilter('StripTags')
-			->addFilter('StringTrim')
+			->addValidator('Float')
 			->addValidator('NotEmpty');
 			
-		$dateCreated = new Zend_Form_Element_Text('dateCreated');
-		$dateCreated->setLabel('Date Stocked')
-			->setRequired(true)
-			->addFilter('StripTags')
-			->addFilter('StringTrim')
-			->addValidator('NotEmpty');
+		$date = new Zend_Date();
+		$date->get(Zend_Date::ISO_8601);
+
 			
 		$quantity = new Zend_Form_Element_Text('quantity');
 		$quantity->setLabel('Quantity')
 			->setRequired(true)
-			->addFilter('StripTags')
-			->addFilter('StringTrim')
+			->addValidator('Digits')
 			->addValidator('NotEmpty');
 		
 		# This should be a drop down based on the category table, right?	
 		$category = new Zend_Form_Element_Text('category');
 		$category->setLabel('Item')
 			->setRequired(true)
-			->addFilter('StripTags')
-			->addFilter('StringTrim')
+			->addValidator('Digits')
 			->addValidator('NotEmpty');
 
 	$submit = new Zend_Form_Element_Submit('submit');
 	$submit->setAttrib('inv', 'submitbutton')
 		->setLabel('Inventory Updates');
-	$this->addElements(array($itemName, $itemDescription, $price, $dateCreated, $quantity, $category, $submit));
+	$this->addElements(array($itemName, $itemDescription, $price, $date, $quantity, $category, $submit));
 	}
 }

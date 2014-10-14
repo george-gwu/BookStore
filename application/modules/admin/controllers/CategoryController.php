@@ -11,7 +11,7 @@ class Admin_CategoryController extends Zend_Controller_Action
     public function indexAction()
     {
         $categories = new Application_Model_DbTable_Categories();
-        $this->view->categories = $categories->fetchAll();
+        $this->view->categories = $categories->fetchAll();    
     }
 
     public function addAction()

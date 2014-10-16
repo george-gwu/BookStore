@@ -75,9 +75,9 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
      * @return type
      */
     public function getCreditCard($userID){
-        $select = $this->select()->where('id <= ?', $userID);
+        $select = $this->select()->where('id = ?', $userID);
 
-	$dbResult = $this->fetchRow($select);
+	$dbResult = $this->fetchRow($select);        
         
         if(empty($dbResult['encryptVector'])) return array(); //no stored card on file
         
@@ -99,7 +99,7 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
      * @return Shipping Address
      */
     public function getShippingAddress($userID){
-        $select = $this->select()->where('id <= ?', $userID);
+        $select = $this->select()->where('id = ?', $userID);
 
 	$dbResult = $this->fetchRow($select);
                
@@ -120,7 +120,7 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
      * @return Billing Address
      */
     public function getBillingAddress($userID){
-        $select = $this->select()->where('id <= ?', $userID);
+        $select = $this->select()->where('id = ?', $userID);
 
 	$dbResult = $this->fetchRow($select);
                

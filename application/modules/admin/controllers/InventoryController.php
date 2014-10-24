@@ -23,7 +23,8 @@ class Admin_InventoryController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        
+        $inventories = new Inventory_Update_Form();
+        $this->view->inventories = $inventories->fetchAll();          
     }
 
     public function addAction()
@@ -82,4 +83,22 @@ class Admin_InventoryController extends Zend_Controller_Action
         }
         
     }
+       public function deleteAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $del = $this->getRequest()->getPost('del');
+            if ($del == 'Yes') {
+                $itemID = $this->getRequest()->getParam('itemID');
+                
+                $inventoryDb = new Inventory_Update_Form();
+                $inventoryDb->deleteCategory($itemID);
+            }
+            $this->_helper->redirector('index');
+        } else {
+            $itemID = $this->_getParam('itemID', 0);
+            $inventoryDb = new Inventory_Update_Form();
+            $this->view->inventory = $inventoryDb->getInventory($itemID);
+        }
+    }
+
 }

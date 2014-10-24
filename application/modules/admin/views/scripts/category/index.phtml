@@ -1,0 +1,20 @@
+<?php         
+$this->title = "My Categories";
+$this->headTitle($this->title);
+?>
+<p><a href="<?php echo $this->url(array('action'=>'add'));?>">Add new category</a></p>
+<table>
+<tr>
+    <th>Category Name</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach($this->categories as $category) : ?>
+<tr>
+    <td><?php echo $this->escape($category->categoryName);?></td>
+    <td>
+        <a href="<?php echo $this->url(array('action'=>'edit', 'id'=>$category->id));?>">Edit</a>
+        <a href="<?php echo $this->url(array('action'=>'delete', 'id'=>$category->id));?>">Delete</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>

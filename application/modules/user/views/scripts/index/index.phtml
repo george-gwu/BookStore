@@ -1,0 +1,26 @@
+<?php 
+$this->title = $this->fullName ."'s Profile";
+$this->headTitle($this->title);
+?>
+<div>
+    <h2>Update Credit Card</h2>
+    <?= $this->creditCardForm; ?>
+</div>
+
+<br style="clear:both;"> 
+<div style="clear:both;">
+    <h2>Shipping Address</h2>
+    <?= $this->shippingAddressForm; ?>
+</div>
+
+<br style="clear:both;"> 
+<div style="clear:both;">
+    <h2>Billing Address</h2>
+    <?= $this->billingAddressForm; ?>
+</div>
+
+<br style="clear:both;"> 
+<div style="clear:both;">
+    <h2>Change Password</h2>
+    <?= $this->passwordForm; ?>
+</div>

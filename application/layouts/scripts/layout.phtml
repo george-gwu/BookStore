@@ -1,0 +1,36 @@
+<?php 
+$auth = Zend_Auth::getInstance();
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+$this->headTitle()->setSeparator(' - ');
+$this->headTitle('Paper Free Books');
+
+echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head>
+    <?= $this->headMeta(); ?> 
+    <?= $this->headTitle(); ?>
+    <?= $this->headLink()
+            ->prependStylesheet($this->baseUrl().'/css/site.css')
+            ->prependStylesheet('http://yui.yahooapis.com/3.17.2/build/cssgrids/cssgrids-min.css')
+            ->prependStylesheet('http://yui.yahooapis.com/3.17.2/build/cssnormalize/cssnormalize-min.css'); ?> 
+</head>
+<body>
+    <div class="yui3-g">
+        <div class="yui3-u-23-24" id="header">
+            <span style="float:right;">
+                <?php if($auth->hasIdentity()): ?>
+                    <a href="<?= $this->url(array('module'=>'user', 'controller'=>'index', 'action'=>'index')); ?>">Profile</a> |
+                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'logout')); ?>">Logout</a>    
+                <?php else: ?>
+                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'register')); ?>">Register</a> | 
+                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'login')); ?>">Login</a>
+                <?php endif; ?>    
+            </span>
+        </div>
+        <div id="content" class="yui3-u-1">
+            <h1><?= $this->escape($this->title); ?></h1>
+            <?= $this->layout()->content; ?>
+        </div>
+    </div>
+</body>
+</html>

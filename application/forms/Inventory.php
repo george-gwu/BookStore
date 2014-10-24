@@ -28,7 +28,6 @@ class Inventory_Update_Form extends Zend_Form
 			->addValidator('Float')
 			->addValidator('NotEmpty');
 		 
-		 
 		$dateCreated = new Zend_Date();
     		$dateCreated->get(Zend_Date::ISO_8601);	
 			

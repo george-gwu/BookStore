@@ -1,11 +1,11 @@
-<?php         
-$this->title = "Browse Items";
-$this->headTitle($this->title);
-?>
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ind
+ * Date: 10/25/14
+ * Time: 4:37 PM
+ */
 
-<html>
-<body>
-<h1>Books</h1>
 <ul><?php
 
     // Create a select query. $db is a Zend_Db_Adapter object, which we assume
@@ -25,15 +25,17 @@ $this->headTitle($this->title);
     $paginator->setDefaultItemCountPerPage( 5 );
     $paginator->setCurrentPageNumber(1);
 
+
+    //Item Name , Price , Add to cart button
+
     // Render each item for the current page in a list-item
     foreach ($paginator as $item) {
         echo '<li>' . $item . '</li>';
+        echo '<li>' . 'NAME' . '</li>';
+        echo '<li>' . 'Price' . '</li>';
+        echo '<li>' . '<input type="button" value="Add to Cart" alt="Add to Cart">'.'</li>';
+
+
     }
 
     ?></ul>
-
-
-
-
-</body>
-</html>

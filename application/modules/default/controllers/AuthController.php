@@ -99,7 +99,7 @@ class AuthController extends Zend_Controller_Action
                                                             $passwordHash
                                                         );
                 
-                $this->view->form = "You have registed! You are customer $userID";
+                $this->view->form = "You have registerd! You are customer $userID";
                 
             } else {
                 $form->populate($rawFormData);

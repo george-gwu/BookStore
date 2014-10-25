@@ -18,7 +18,7 @@ attributes and includes a button to add the item to the shopping cart.
 comments as a listing. 
 
  */
-class IndexController extends Zend_Controller_Action
+class ItemController extends Zend_Controller_Action
 {
 
     public function init()
@@ -26,9 +26,10 @@ class IndexController extends Zend_Controller_Action
         /* Initialize action controller here */
     }
 
-    public function indexAction()
-    {
-        
+    public function browseAction(){
+        echo $this->view->message = 'Browse Dem Items';
+
+
     }
     
 }

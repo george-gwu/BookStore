@@ -23,7 +23,8 @@ echo $this->doctype(); ?>
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'logout')); ?>">Logout</a>    
                 <?php else: ?>
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'register')); ?>">Register</a> | 
-                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'login')); ?>">Login</a>
+                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'login')); ?>">Login</a> |
+                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'item', 'action'=>'browse')); ?>">Browse</a>
                 <?php endif; ?>    
             </span>
         </div>

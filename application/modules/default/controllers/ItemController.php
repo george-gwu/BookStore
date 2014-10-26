@@ -48,8 +48,6 @@ class ItemController extends Zend_Controller_Action
     }
     public function priceAction()
     {
-        //$form = new Application_Form_Browse();
-        //$this->view->form = $form;
 
         $items = new Application_Model_DbTable_ItemBrowse();
 
@@ -62,9 +60,6 @@ class ItemController extends Zend_Controller_Action
     }
     public function categoryAction()
     {
-        //$form = new Application_Form_Browse();
-        //$this->view->form = $form;
-
         $items = new Application_Model_DbTable_ItemBrowse();
 
         $page = $this->_request->getParam('page');
@@ -73,6 +68,16 @@ class ItemController extends Zend_Controller_Action
         $paginator = $items->getItemsByCategory($page);
         $this->view->paginator = $paginator;
 
+    }
+    public function detailAction()
+    {
+        $items = new Application_Model_DbTable_ItemBrowse();
+
+        $page = $this->_request->getParam('page');
+        if (empty($page)) { $page = 1; }
+
+        $paginator = $items->getItemsByCategory($page);
+        $this->view->paginator = $paginator;
     }
     
 }

@@ -42,4 +42,15 @@ class Application_Model_DbTable_ItemBrowse extends Zend_Db_Table_Abstract
         $paginator->setCurrentPageNumber($page);
         return $paginator;
     }
+
+    public function getItemDetail($id)
+    {
+        $id = (int)$id;
+        $row = $this->fetchRow('id = ' . $id);
+        if (!$row) {
+            throw new Exception("Could not find row $id");
+        }
+        return $row->toArray();
+
+    }
 } 

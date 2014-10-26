@@ -113,17 +113,17 @@
 
     /***
 
-    * CREATE TABLE `inventory` (
-    `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `itemName` varchar(128) NOT NULL,
-    `itemDescription` text NOT NULL,
-    `price` decimal(5,2) NOT NULL,
-     `dateCreated` datetime NOT NULL,
-     `quantity` int(11) NOT NULL,
-    `categoryID` int(11) NOT NULL,
-      PRIMARY KEY (`ID`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
+CREATE TABLE  `bookstore`.`inventory` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `itemName` varchar(128) NOT NULL,
+  `itemDescription` text NOT NULL,
+  `imageURL` varchar(255) DEFAULT NULL,
+  `price` decimal(5,2) NOT NULL,
+  `dateCreated` datetime NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `categoryID` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
     */
     
 }

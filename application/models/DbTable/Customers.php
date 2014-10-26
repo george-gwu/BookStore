@@ -5,6 +5,16 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
     protected $_name = 'customers';   
 
     
+    public function updateCartData($userID, App_Cart $cart){
+        $data = array(
+                    'cartData'         => $cart->serialize()
+        );
+        
+        $where = $this->getAdapter()->quoteInto('id = ?', $userID);
+        
+        $this->update($data, $where);        
+    }
+    
     public function registerCustomer($email, $firstName, $lastName, $password){
         $data = array(
             'roleType'      => App_Acl::ROLE_USER,
@@ -208,13 +218,16 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
     }    
 
     /*** 
-     * CREATE TABLE  `bookstore`.`customers` (
+     * 
+CREATE TABLE  `bookstore`.`customers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `roleType` int(1) unsigned NOT NULL DEFAULT '0',
   `email` varchar(128) NOT NULL COMMENT 'username',
   `firstName` varchar(128) NOT NULL,
   `lastName` varchar(128) NOT NULL,
   `password` varchar(128) NOT NULL,
+  `loginDate` datetime NOT NULL,
+  `cartData` text NOT NULL COMMENT 'JSON-encoded',
   `shippingAddress1` varchar(128) DEFAULT NULL,
   `shippingAddress2` varchar(128) DEFAULT NULL,
   `shippingCity` varchar(64) DEFAULT NULL,
@@ -231,9 +244,10 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
   `encryptedCardNumber` varchar(255) DEFAULT NULL,
   `encryptedCardExpiration` varchar(255) DEFAULT NULL,
   `encryptedCardSecurityCode` varchar(255) DEFAULT NULL,
+  `encryptVector` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
      */
 
 }

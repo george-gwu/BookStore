@@ -28,7 +28,7 @@ CREATE TABLE  `bookstore`.`categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 INSERT INTO `bookstore`.`categories` (`id`,`categoryName`) VALUES 
- (2,'Testing124');
+ (1,'Biology');
 
 DROP TABLE IF EXISTS `bookstore`.`customers`;
 CREATE TABLE  `bookstore`.`customers` (
@@ -38,6 +38,8 @@ CREATE TABLE  `bookstore`.`customers` (
   `firstName` varchar(128) NOT NULL,
   `lastName` varchar(128) NOT NULL,
   `password` varchar(128) NOT NULL,
+  `loginDate` datetime NOT NULL,
+  `cartData` text NOT NULL COMMENT 'JSON-encoded',
   `shippingAddress1` varchar(128) DEFAULT NULL,
   `shippingAddress2` varchar(128) DEFAULT NULL,
   `shippingCity` varchar(64) DEFAULT NULL,
@@ -87,12 +89,14 @@ CREATE TABLE  `bookstore`.`inventory` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `itemName` varchar(128) NOT NULL,
   `itemDescription` text NOT NULL,
+  `imageURL` varchar(255) DEFAULT NULL,
   `price` decimal(5,2) NOT NULL,
   `dateCreated` datetime NOT NULL,
   `quantity` int(11) NOT NULL,
   `categoryID` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+INSERT INTO `bookstore`.`inventory` VALUES  (1,'Biology Book','This is a book on biology','http://ecx.images-amazon.com/images/I/41UWC4kbxGL.jpg','5.00','2014-10-26 00:00:00',50,1);
 
 DROP TABLE IF EXISTS `bookstore`.`orders`;
 CREATE TABLE  `bookstore`.`orders` (
@@ -112,18 +116,6 @@ CREATE TABLE  `bookstore`.`reviews` (
   `rating` int(2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `bookstore`.`sessions`;
-CREATE TABLE  `bookstore`.`sessions` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `customerID` int(10) unsigned NOT NULL,
-  `loginDate` datetime NOT NULL,
-  `cartData` text NOT NULL COMMENT 'JSON-encoded',
-  PRIMARY KEY (`id`),
-  KEY `customerID_idx` (`customerID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -96,6 +96,13 @@ class App_Cart implements Serializable  {
      */
     protected function persist(){
         $this->session->cart = $this->serialize();       
+        
+        $auth = Zend_Auth::getInstance();
+        if($auth->hasIdentity()) {
+            $customerDB = new Application_Model_DbTable_Customers();
+            $customerDB->updateCartData($auth->getIdentity()->id, $this);
+            
+        }
     }
     
     

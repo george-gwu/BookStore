@@ -24,7 +24,7 @@ $id = substr( $link, strrpos( $link, '/' )+1 );
                 <tr>
                     <td><?php echo $item->itemName;?></td>
                     <td><?php echo $item->price;?></td>
-                    <td><?php echo '<input type="button" value="Add to Cart" alt="Add to Cart">';?></td>
+                    <td><?php echo '<a href="'.$this->url(array('module'=>'default','controller'=>'cart','action'=>'add','pid'=> $id), null, true); ?>">Add to Cart!</a></td>
                     <td><?php echo $item->itemDescription;?></td>
                 </tr>
             <?php endif; ?>

@@ -22,9 +22,8 @@ $this->headTitle($this->title);
             <td align="center">
                 <form method="post" action="<?= $this->url(array('action'=>'changeqty','pid'=> $item['pid'])); ?>">
                     <select name="qty" onChange="this.form.submit();">
-                        <option value="<?= $item['q'] ?>" selected><?= $item['q'] ?></option>
-                        <?php for($i=0; $i<10; $i++): ?>
-                            <option value="<?= $i ?>"><?= $i ?></option>
+                        <?php for($i=0; $i<=($item['q']>9 ? $item['q'] : 9); $i++): ?>
+                            <option value="<?= $i; ?>"<?= ($i==$item['q']) ? ' selected' : ''; ?>><?= $i; ?></option>
                         <?php endfor; ?>
                     </select>
             </td>

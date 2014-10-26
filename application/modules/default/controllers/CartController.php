@@ -54,6 +54,23 @@ class CartController extends Zend_Controller_Action
         $redir = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');        
         $redir->gotoUrl($next)->redirectAndExit();                
     }    
+    
+    public function changeqtyAction(){
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+        
+        $productID = (int)$this->_getParam('pid');
+        $quantity = (int)$this->_getParam('qty');
+        $next = $this->_getParam('next'); //nextURL (forwards you there)               
+        
+        $cart = new App_Cart();
+        $cart->changeItemQuantity($productID, $quantity);
+        
+        if(empty($next)) $next = $this->view->url(array('action'=>'index', 'controller'=>'cart'), null, true);
+                
+        $redir = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');        
+        $redir->gotoUrl($next)->redirectAndExit();                
+    }       
    
 
 }

@@ -6,23 +6,33 @@ $this->headTitle($this->title);
 <?php if($this->cart->isEmpty()): ?>
     Your cart is empty!
 <?php else: ?>
-    <ul>
+    <table width="500">
+        <tr><td width="400">&nbsp;</td><td width="50">Price</td><td>Quantity</td></tr>
     <?php foreach($this->cart->getItems() as $item): ?>
-
-        <li>
-            <?= $this->cartInfo[$item['pid']]['itemName']; ?> - 
-            <?= money_format('$%i',$this->cartInfo[$item['pid']]['price']); ?> 
-            (Quantity: <?= $item['q']; ?>)
-            <a href="<?= $this->url(array('action'=>'delete','pid'=> $item['pid'])); ?>">Delete</a>
-        </li>
-
+        <tr>
+            <td>
+                <b><?= $this->cartInfo[$item['pid']]['itemName']; ?></b><br>
+                <?= $this->cartInfo[$item['pid']]['itemDescription']; ?><br>
+                <?= ($this->cartInfo[$item['pid']]['quantity'] > 0) ? 'In Stock' : 'Backorder'; ?><br><br>
+                <small><a href="<?= $this->url(array('action'=>'delete','pid'=> $item['pid'])); ?>">Delete</a></small>
+            </td>
+            <td align="center">                
+                <b><?= money_format('$%i',$this->cartInfo[$item['pid']]['price']); ?> </b>                
+            </td>
+            <td align="center">
+                <form method="post" action="<?= $this->url(array('action'=>'changeqty','pid'=> $item['pid'])); ?>">
+                    <select name="qty" onChange="this.form.submit();">
+                        <?php for($i=1; $i<10; $i++): ?>
+                            <option value="<?= $i; ?>"<?= ($i==$item['q']) ? ' selected' : ''; ?>><?= $i; ?></option>
+                        <?php endfor; ?>
+                    </select>
+            </td>
+        </tr>                    
     <?php endforeach; ?>
-    </ul>
+    </table>
 <?php endif; ?>
     <BR>
     <a href="<?= $this->url(array('action'=>'add','pid'=> 1)); ?>">Add an item!</a>
     <BR>
-    Debug: <?= $this->cart; ?>
-            <?= print_r($this->cartInfo,1); ?>  
     
     

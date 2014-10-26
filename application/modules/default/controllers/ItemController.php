@@ -1,5 +1,11 @@
 <?php
 /**
+ * Created by PhpStorm.
+ * User: Tyler
+ * Date: 10/26/14
+ * Time: 11:30 AM
+ */
+/**
  1) Customers must be able to browse the inventory of items to purchase. When looking for an 
 item the customer should be presented with a listing (at least 3 items per screen) of at least the 
 following attributes: 
@@ -28,31 +34,18 @@ class ItemController extends Zend_Controller_Action
 
     public function browseAction()
     {
-        $form = new Application_Form_Browse();
-        $this->view->form = $form;
+        //$form = new Application_Form_Browse();
+       // $this->view->form = $form;
 
-        // Create an array with numbers 1 to 100
-        $data = range(1, 100);
+        $items = new Application_Model_DbTable_ItemBrowse();
 
-        // Get a Paginator object using Zend_Paginator's built-in factory.
-        $paginator = Zend_Paginator::factory($data);
+        $page = $this->_request->getParam('page');
+        if (empty($page)) { $page = 1; }
 
-        //Configure Paginator
-        $paginator->setDefaultItemCountPerPage( 5 );
-        $paginator->setCurrentPageNumber(1);
+        $paginator = $items->getPageOfItems($page);
+        $this->view->paginator = $paginator;
 
 
-        //Item Name , Price , Add to cart button
-
-        // Render each item for the current page in a list-item
-        foreach ($paginator as $item) {
-            echo '<li>' . $item . '</li>';
-            echo '<li>' . 'NAME' . '</li>';
-            echo '<li>' . 'Price' . '</li>';
-            echo '<li>' . '<input type="button" value="Add to Cart" alt="Add to Cart">'.'</li>';
-
-
-        }
 
     }
     

@@ -49,7 +49,10 @@ class AuthController extends Zend_Controller_Action
                 $result = $auth->authenticate($authAdapter);
                 if ($result->isValid()) {
                     $user = $authAdapter->getResultRowObject();
-                    $auth->getStorage()->write($user);                    
+                    $auth->getStorage()->write($user);  
+                    
+                    $customersDb = new Application_Model_DbTable_Customers();
+                    $customersDb->updateLoginDate($user->id);
                     
                     $this->_helper->layout()->disableLayout(); 
                     $this->_helper->viewRenderer->setNoRender(true);

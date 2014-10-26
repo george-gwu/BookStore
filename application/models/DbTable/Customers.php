@@ -15,6 +15,14 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
         $this->update($data, $where);        
     }
     
+    public function updateLoginDate($userID){
+        $data = array('loginDate' => new Zend_Db_Expr('NOW()'));
+        
+        $where = $this->getAdapter()->quoteInto('id = ?', $userID);
+        
+        $this->update($data, $where);  
+    }
+    
     public function registerCustomer($email, $firstName, $lastName, $password){
         $data = array(
             'roleType'      => App_Acl::ROLE_USER,

@@ -4,18 +4,32 @@ class App_Cart implements Serializable  {
     protected $cartData = array();
     private $session;
     
-    public function __construct(){ 
+    public function __construct($serializedCart=null){ 
         $this->session = new Zend_Session_Namespace('cart');
         
-        if(isset($this->session->cart) and !empty($this->session->cart)){
-            $this->unserialize($this->session->cart);            
-        }
+        if(is_null($serializedCart)){
+            if(isset($this->session->cart) and !empty($this->session->cart)){
+               $this->unserialize($this->session->cart);            
+            }            
+        } else {
+            $this->unserialize($serializedCart);
+        }                
+        
         
         if(!is_array($this->cartData)){
             $this->cartData = array();
             $this->persist();
         }
         
+    }
+    
+    /**
+     * Merge a cart with another (used during login)
+     * @param App_Cart $newCart
+     */
+    public function mergeCart(App_Cart $newCart){
+        $this->cartData = $this->cartData + $newCart->getRawCartDataForMerge();
+        $this->persist();
     }
      
    /**
@@ -103,6 +117,10 @@ class App_Cart implements Serializable  {
             $customerDB->updateCartData($auth->getIdentity()->id, $this);
             
         }
+    }
+    
+    public function getRawCartDataForMerge(){
+        return $this->cartData;
     }
     
     

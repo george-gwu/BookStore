@@ -73,11 +73,12 @@
             $select = $this->select()->where ('ID = ?', (int)$id);
             $dbResult = $this->fetchRow($select);
             $data = array (
-                'itemID' => $dbResult['ID'],
-                'itemName' => $dbResult['itemName'],
-                'itemDescription' => $dbResult['itemDescription'],
-                'price' => $dbResult['price'],
-                'quantity' => $dbResult['quantity']
+                'itemID'            => $dbResult['ID'],
+                'itemName'          => $dbResult['itemName'],
+                'itemDescription'   => $dbResult['itemDescription'],
+                'imageURL'          => $dbResult['imageURL'],
+                'price'             => $dbResult['price'],
+                'quantity'          => $dbResult['quantity']
                 );
             return $data;
         }
@@ -102,6 +103,7 @@
                 $data[$id] = array ('itemID'             => $id,
                                     'itemName'          => $row['itemName'],
                                     'itemDescription'   => $row['itemDescription'],
+                                    'imageURL'          => $row['imageURL'],
                                     'price'             => $row['price'],
                                     'quantity'          => $row['quantity']
                                     );

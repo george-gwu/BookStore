@@ -54,6 +54,9 @@ class AuthController extends Zend_Controller_Action
                     $customersDb = new Application_Model_DbTable_Customers();
                     $customersDb->updateLoginDate($user->id);
                     
+                    $cart = new App_Cart();
+                    $cart->mergeCart(new App_Cart($user->cartData));
+                    
                     $this->_helper->layout()->disableLayout(); 
                     $this->_helper->viewRenderer->setNoRender(true);
                     $this->_helper->getHelper('Redirector')->setCode(303)

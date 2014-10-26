@@ -32,6 +32,6 @@ $this->headTitle($this->title);
     </table>
 <?php endif; ?>
     <BR>
-    <BR>DEBUG: <a href="<?= $this->url(array('action'=>'add','pid'=> 1)); ?>">Add an item!</a>
+    <BR>DEBUG: <a href="<?= $this->url(array('module'=>'default','controller'=>'cart','action'=>'add','pid'=> 1), null, true); ?>">Add an item!</a>
     
     

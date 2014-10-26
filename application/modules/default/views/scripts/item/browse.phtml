@@ -12,6 +12,7 @@ $this->headTitle($this->title);
 <?php if (count($this->paginator)): ?>
 <table>
     <tr>
+        <th>Category</th>
         <th>Name</th>
         <th>Price</th>
         <th>&nbsp;</th>
@@ -19,6 +20,7 @@ $this->headTitle($this->title);
     <?php foreach($this->paginator as $item): ?>
 
         <tr>
+            <td><?php echo $item->categoryID;?></td>
             <td><?php echo $item->itemName;?></td>
             <td><?php echo $item->price;?></td>
             <td><?php echo '<input type="button" value="Add to Cart" alt="Add to Cart">';?></td>
@@ -27,3 +29,5 @@ $this->headTitle($this->title);
     <?php endforeach; ?>
 </table>
 <?php endif; ?>
+
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'my_pagination_control.phtml'); ?>

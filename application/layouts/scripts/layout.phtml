@@ -25,7 +25,8 @@ echo $this->doctype(); ?>
                 <?php else: ?>
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'cart', 'action'=>'index')); ?>">Cart</a> |
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'register')); ?>">Register</a> | 
-                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'login')); ?>">Login</a> 
+                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'login')); ?>">Login</a>
+                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'item', 'action'=>'browse')); ?>"> | Browse</a>
                 <?php endif; ?>    
             </span>
         </div>

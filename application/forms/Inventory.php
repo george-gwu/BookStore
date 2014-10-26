@@ -1,6 +1,6 @@
 <?php
 
-class Inventory_Update_Form extends Zend_Form
+class Application_Form_Inventory extends Zend_Form
 {
 	public function init()
 	{

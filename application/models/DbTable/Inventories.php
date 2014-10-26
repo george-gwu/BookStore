@@ -1,6 +1,6 @@
 <?php
 
-    class Application_Model_DbTable_Inventory extends Zend_Db_Table_Abstract
+    class Application_Model_DbTable_Inventories extends Zend_Db_Table_Abstract
     {
         /**
          * Allows an admin to add a book or article to the inventory.

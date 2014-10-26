@@ -1,0 +1,25 @@
+<?php         
+$this->title = "Shopping Cart";
+$this->headTitle($this->title);
+?>
+
+<?php if($this->cart->isEmpty()): ?>
+    Your cart is empty!
+<?php else: ?>
+    <ul>
+    <?php foreach($this->cart->getItems() as $item): ?>
+
+        <li>
+            Item <?= $item['pid']; ?> (Quantity: <?= $item['q']; ?>)
+            <a href="<?= $this->url(array('action'=>'delete','pid'=> $item['pid'])); ?>">Delete</a>
+        </li>
+
+    <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+    <BR>
+    <a href="<?= $this->url(array('action'=>'add','pid'=> 7)); ?>">Add an item!</a>
+    <BR>
+    Debug: <?= $this->cart; ?>
+    
+    

@@ -43,14 +43,13 @@ class Application_Model_DbTable_ItemBrowse extends Zend_Db_Table_Abstract
         return $paginator;
     }
 
-    public function getItemDetail($id)
+    public function getItemDetail($page)
     {
-        $id = (int)$id;
-        $row = $this->fetchRow('id = ' . $id);
-        if (!$row) {
-            throw new Exception("Could not find row $id");
-        }
-        return $row->toArray();
+        $query = $this->select();
+        $paginator = new Zend_Paginator( new Zend_Paginator_Adapter_DbTableSelect($query));
+        $paginator->setItemCountPerPage(100);
+        $paginator->setCurrentPageNumber($page);
+        return $paginator;
 
     }
 } 

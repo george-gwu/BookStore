@@ -76,7 +76,7 @@ class ItemController extends Zend_Controller_Action
         $page = $this->_request->getParam('page');
         if (empty($page)) { $page = 1; }
 
-        $paginator = $items->getItemsByCategory($page);
+        $paginator = $items->getItemDetail($page);
         $this->view->paginator = $paginator;
     }
     

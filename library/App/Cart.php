@@ -108,6 +108,6 @@ class App_Cart implements Serializable  {
     }
 
     public function __ToString() {
-      return print_r($this->getItems(),1);
+      return 'Cart: ' . print_r($this->getItems(),1);
     }
 }

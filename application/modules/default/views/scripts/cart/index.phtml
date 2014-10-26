@@ -10,7 +10,9 @@ $this->headTitle($this->title);
     <?php foreach($this->cart->getItems() as $item): ?>
 
         <li>
-            Item <?= $item['pid']; ?> (Quantity: <?= $item['q']; ?>)
+            <?= $this->cartInfo[$item['pid']]['itemName']; ?> - 
+            <?= money_format('$%i',$this->cartInfo[$item['pid']]['price']); ?> 
+            (Quantity: <?= $item['q']; ?>)
             <a href="<?= $this->url(array('action'=>'delete','pid'=> $item['pid'])); ?>">Delete</a>
         </li>
 
@@ -18,8 +20,9 @@ $this->headTitle($this->title);
     </ul>
 <?php endif; ?>
     <BR>
-    <a href="<?= $this->url(array('action'=>'add','pid'=> 7)); ?>">Add an item!</a>
+    <a href="<?= $this->url(array('action'=>'add','pid'=> 1)); ?>">Add an item!</a>
     <BR>
     Debug: <?= $this->cart; ?>
+            <?= print_r($this->cartInfo,1); ?>  
     
     

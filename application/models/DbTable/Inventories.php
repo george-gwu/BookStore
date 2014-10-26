@@ -64,6 +64,51 @@
             return $data;
         }
         
+        /**
+         * Get an item by inventory ID
+         * @param type $id
+         * @return type
+         */
+        public function getItemById($id){
+            $select = $this->select()->where ('ID = ?', (int)$id);
+            $dbResult = $this->fetchRow($select);
+            $data = array (
+                'itemID' => $dbResult['ID'],
+                'itemName' => $dbResult['itemName'],
+                'itemDescription' => $dbResult['itemDescription'],
+                'price' => $dbResult['price'],
+                'quantity' => $dbResult['quantity']
+                );
+            return $data;
+        }
+        
+        /**
+         * Get a group of items by an array of IDs
+         * @param array $idArray
+         */
+        public function getItemsById(array $idArray){            
+            $data=array();
+            
+            if(count($idArray)<=0) return $data;
+            
+            $idList = array_map(function($i){ return (int)$i; }, $idArray);  // make the input safe, cast as int
+            $idString = implode(',', $idList); // convert to comma separated list
+            
+            $select = $this->select()->where ('id in (?)', $idString);
+            $rows = $this->fetchAll($select);
+                        
+            foreach($rows as $row){
+                $id=$row['id'];
+                $data[$id] = array ('itemID'             => $id,
+                                    'itemName'          => $row['itemName'],
+                                    'itemDescription'   => $row['itemDescription'],
+                                    'price'             => $row['price'],
+                                    'quantity'          => $row['quantity']
+                                    );
+            }            
+            
+            return $data;
+        }
         
 
     /***

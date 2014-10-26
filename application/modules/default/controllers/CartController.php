@@ -14,6 +14,9 @@ class CartController extends Zend_Controller_Action
         $cart = new App_Cart();
         $this->view->cart = $cart;
         
+        $inventoryDb = new Application_Model_DbTable_Inventories();
+        $this->view->cartInfo = $inventoryDb->getItemsById($cart->getItemIDsArray());
+        
     }
     
     
@@ -23,6 +26,9 @@ class CartController extends Zend_Controller_Action
         
         $productID = (int)$this->_getParam('pid');
         $next = $this->_getParam('next'); //nextURL (forwards you there)               
+        
+        $inventoryDb = new Application_Model_DbTable_Inventories();
+        
         
         $cart = new App_Cart();
         $cart->addItem($productID);                

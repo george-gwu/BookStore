@@ -32,7 +32,7 @@ class App_Cart implements Serializable  {
      * @return type
      */
     public function getItems(){
-        $itemList= array_keys($this->cartData);
+        $itemList= $this->getItemIDsArray();
         
         $items=array();
         
@@ -42,6 +42,14 @@ class App_Cart implements Serializable  {
         
         return $items;
     }    
+    
+    /**
+     * Get an array of item IDs
+     * @return array
+     */
+    public function getItemIDsArray(){
+       return array_keys($this->cartData); 
+    }
 
     /**
      * Add an item to the cart

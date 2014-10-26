@@ -19,12 +19,13 @@ echo $this->doctype(); ?>
         <div class="yui3-u-23-24" id="header">
             <span style="float:right;">
                 <?php if($auth->hasIdentity()): ?>
+                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'cart', 'action'=>'index')); ?>">Cart</a> |
                     <a href="<?= $this->url(array('module'=>'user', 'controller'=>'index', 'action'=>'index')); ?>">Profile</a> |
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'logout')); ?>">Logout</a>    
                 <?php else: ?>
+                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'cart', 'action'=>'index')); ?>">Cart</a> |
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'register')); ?>">Register</a> | 
-                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'login')); ?>">Login</a> |
-                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'item', 'action'=>'browse')); ?>">Browse</a>
+                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'login')); ?>">Login</a> 
                 <?php endif; ?>    
             </span>
         </div>

@@ -22,7 +22,7 @@ $this->headTitle($this->title);
             <td align="center">
                 <form method="post" action="<?= $this->url(array('action'=>'changeqty','pid'=> $item['pid'])); ?>">
                     <select name="qty" onChange="this.form.submit();">
-                        <?php for($i=1; $i<10; $i++): ?>
+                        <?php for($i=0; $i<10; $i++): ?>
                             <option value="<?= $i; ?>"<?= ($i==$item['q']) ? ' selected' : ''; ?>><?= $i; ?></option>
                         <?php endfor; ?>
                     </select>
@@ -32,7 +32,6 @@ $this->headTitle($this->title);
     </table>
 <?php endif; ?>
     <BR>
-    <a href="<?= $this->url(array('action'=>'add','pid'=> 1)); ?>">Add an item!</a>
-    <BR>
+    <BR>DEBUG: <a href="<?= $this->url(array('action'=>'add','pid'=> 1)); ?>">Add an item!</a>
     
     

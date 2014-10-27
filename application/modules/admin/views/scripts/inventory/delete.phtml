@@ -1,13 +1,13 @@
 <?php 
-$this->title = "Delete category";
+$this->title = "Delete inventory";
 $this->headTitle($this->title);
 ?>
 <p>Are you sure that you want to delete 
-  '<?php echo $this->escape($this->category['categoryName']); ?>'
+  '<?php echo $this->escape($this->category['itemName']); ?>'
 </p>
 <form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post">
 <div>
-  <input type="hidden" name="id" value="<?php echo $this->category['id']; ?>" />
+  <input type="hidden" name="id" value="<?php echo $this->inventory['itemID']; ?>" />
   <input type="submit" name="del" value="Yes" />
   <input type="submit" name="del" value="No" />
 </div>

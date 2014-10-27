@@ -23,13 +23,13 @@ class Admin_InventoryController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $inventories = new Inventory_Update_Form();
+        $inventories = new Application_Model_DbTable_Inventories();
         $this->view->inventories = $inventories->fetchAll();          
     }
 
     public function addAction()
     {
-        $form = new Inventory_Update_Form();
+        $form = new Application_Form_Inventory();
         $form->submit->setLabel('Add');
         $this->view->form = $form;
         
@@ -53,7 +53,7 @@ class Admin_InventoryController extends Zend_Controller_Action
 
     public function editAction()
     {
-        $form = new Inventory_Update_Form();
+        $form = new Application_Form_Inventory();
         $form->submit->setLabel('Save');
         $this->view->form = $form;
         
@@ -67,7 +67,7 @@ class Admin_InventoryController extends Zend_Controller_Action
                 $quantity = $form->getValue('quantity');
                 $category = $form->getValue('category');
                 
-                $inventoryDb = new Inventory_Update_Form();
+                $inventoryDb = new Application_Model_DbTable_Inventories();
                 $inventoryDb->updateCategory($itemID, $itemName, $itemDescription, $price, $quantity, $category);
                 
                 $this->_helper->redirector('index');
@@ -77,7 +77,7 @@ class Admin_InventoryController extends Zend_Controller_Action
         } else {
             $id = $this->_getParam('id', 0);
             if ($id > 0) {
-                $inventoryDb = new Inventory_Update_Form();
+                $inventoryDb = new Application_Model_DbTable_Inventories();
                 $form->populate($inventoryDb->getInventory($itemID));
             }
         }
@@ -90,13 +90,13 @@ class Admin_InventoryController extends Zend_Controller_Action
             if ($del == 'Yes') {
                 $itemID = $this->getRequest()->getParam('itemID');
                 
-                $inventoryDb = new Inventory_Update_Form();
+                $inventoryDb = new Application_Model_DbTable_Inventories();
                 $inventoryDb->deleteCategory($itemID);
             }
             $this->_helper->redirector('index');
         } else {
             $itemID = $this->_getParam('itemID', 0);
-            $inventoryDb = new Inventory_Update_Form();
+            $inventoryDb = new Application_Model_DbTable_Inventories();
             $this->view->inventory = $inventoryDb->getInventory($itemID);
         }
     }

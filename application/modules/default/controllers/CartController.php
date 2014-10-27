@@ -17,8 +17,7 @@ class CartController extends Zend_Controller_Action
         $inventoryDb = new Application_Model_DbTable_Inventories();
         $this->view->cartInfo = $inventoryDb->getItemsById($cart->getItemIDsArray());
         
-    }
-    
+    }    
     
     public function addAction(){
         $this->_helper->viewRenderer->setNoRender(true);

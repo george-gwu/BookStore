@@ -1,0 +1,51 @@
+<?php         
+$this->title = "Check Out: Review Your Order";
+$this->headTitle($this->title);
+?>
+
+<?= $this->form; ?>
+
+<div style="border:1px solid #ccc; float:left;">
+    <table>
+        <tr>
+            <td valign="top">
+                <b>Shipping Address</b> 
+                <small><a href="<?= $this->url(array('module'=>'user','controller'=>'index','action'=>'checkout'), null, true); ?>">Change</a><br></small>
+                <?= $this->customerInfo['shippingAddress1']; ?><br>
+                <?= $this->customerInfo['shippingAddress2']; ?><br>
+                <?= $this->customerInfo['shippingCity']; ?>, <?= $this->customerInfo['shippingState']; ?>, 
+                <?= $this->customerInfo['shippingCountry']; ?> <?= $this->customerInfo['shippingZipcode']; ?>
+            </td>
+            <td valign="top">
+                <b>Billing Address</b> 
+                <small><a href="<?= $this->url(array('module'=>'user','controller'=>'index','action'=>'checkout-billing'), null, true); ?>">Change</a><br></small>
+                <?= $this->customerInfo['billingAddress1']; ?><br>
+                <?= $this->customerInfo['billingAddress2']; ?><br>
+                <?= $this->customerInfo['billingCity']; ?>, <?= $this->customerInfo['billingState']; ?>, 
+                <?= $this->customerInfo['billingCountry']; ?> <?= $this->customerInfo['billingZipcode']; ?>
+            </td>
+            <td valign="top">
+                <b>Payment Method</b> 
+                <small><a href="<?= $this->url(array('module'=>'user','controller'=>'index','action'=>'checkout-credit'), null, true); ?>">Change</a><br></small>
+                ending in <?= $this->customerInfo['cardLastFour']; ?><br>
+            </td>
+        </tr>
+    </table>
+</div>
+<br style="clear:both;"><br style="clear:both;">
+<div style="border:1px solid #ccc; float:left;">
+    <table>
+    <?php foreach($this->cart->getItems() as $item): ?>
+        <tr>
+            <td>
+                <?php if(!empty($this->cartInfo[$item['pid']]['imageURL'])): ?>
+                    <img src="<?= $this->cartInfo[$item['pid']]['imageURL']; ?>" align="left" width="25%" height="25%">
+                <?php endif; ?>                
+                <b><?= $this->cartInfo[$item['pid']]['itemName']; ?></b><br>                
+                Quantity: <?= $item['q']; ?><br>
+                Price: <?= money_format('$%i',$this->cartInfo[$item['pid']]['price']); ?><br>
+            </td>
+        </tr>                    
+    <?php endforeach; ?>
+    </table>
+</div>

@@ -17,6 +17,9 @@ echo $this->doctype(); ?>
 <body>
     <div class="yui3-g">
         <div class="yui3-u-23-24" id="header">
+            <span style="float:left;font-size:18px;font-family:Arial;color:green;font-weight:bolder;">
+                <a href="/" style="text-decoration:none;">PaperFreeBooks.com</a>
+            </span>
             <span style="float:right;">
                 <?php if($auth->hasIdentity()): ?>
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'cart', 'action'=>'index')); ?>">Cart</a> |
@@ -26,7 +29,6 @@ echo $this->doctype(); ?>
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'cart', 'action'=>'index')); ?>">Cart</a> |
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'register')); ?>">Register</a> | 
                     <a href="<?= $this->url(array('module'=>'default', 'controller'=>'auth', 'action'=>'login')); ?>">Login</a> |
-                    <a href="<?= $this->url(array('module'=>'default', 'controller'=>'item', 'action'=>'browse')); ?>">Browse</a>
                 <?php endif; ?>    
             </span>
         </div>

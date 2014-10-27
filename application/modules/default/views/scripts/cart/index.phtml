@@ -11,7 +11,12 @@ $this->headTitle($this->title);
     <?php foreach($this->cart->getItems() as $item): ?>
         <tr>
             <td>
-                <b><?= $this->cartInfo[$item['pid']]['itemName']; ?></b><br>
+                <?php if(!empty($this->cartInfo[$item['pid']]['imageURL'])): ?>
+                    <img src="<?= $this->cartInfo[$item['pid']]['imageURL']; ?>" align="left" width="25%" height="25%">
+                <?php endif; ?>
+                <a href=" <?=$this->url(array('module' => 'default','controller'=>'item','action'=>'detail', 'pid'=>$item['pid']), null, TRUE); ?>">
+                    <b><?= $this->cartInfo[$item['pid']]['itemName']; ?></b>
+                </a><br>
                 <?= $this->cartInfo[$item['pid']]['itemDescription']; ?><br>
                 <?= ($this->cartInfo[$item['pid']]['quantity'] > 0) ? 'In Stock' : 'Backorder'; ?><br><br>
                 <small><a href="<?= $this->url(array('action'=>'delete','pid'=> $item['pid'])); ?>">Delete</a></small>
@@ -31,7 +36,5 @@ $this->headTitle($this->title);
     <?php endforeach; ?>
     </table>
 <?php endif; ?>
-    <BR>
-    <BR>DEBUG: <a href="<?= $this->url(array('module'=>'default','controller'=>'cart','action'=>'add','pid'=> 1), null, true); ?>">Add an item!</a>
-    
-    
+    <center>
+        <h3><a href="<?= $this->url(array('module'=>'user','controller'=>'index','action'=>'checkout'), null, true); ?>">Check Out</a></h3>

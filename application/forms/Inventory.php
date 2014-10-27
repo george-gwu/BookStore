@@ -9,18 +9,14 @@ class Application_Form_Inventory extends Zend_Form
 		$itemName = new Zend_Form_Element_Text('itemName');
 		$itemName->setLabel('Item')
 			->setRequired(true)
-			->addFilter('StripTags')
-			->addFilter('StringTrim')
 			->addValidator('NotEmpty')
-                        ->addValidator('StringLength', false, array(null,128));
+                        ->addValidator('stringLength', false, array(null,128));
 			
-		$itemDescription = new Zend_Form_Element_Password('itemDescription');
+		$itemDescription = new Zend_Form_Element_Text('itemDescription');
 		$itemDescription->setLabel('Item Description')
 			->setRequired(true)
-			->addFilter('StripTags')
-			->addFilter('StringTrim')
 			->addValidator('NotEmpty')
-                        ->addValidator('StringLength', false, array(null,1000));
+                        ->addValidator('stringLength', false, array(null,1000));
 			
 		$price = new Zend_Form_Element_Text('price');
 		$price->setLabel('Price')
@@ -39,11 +35,8 @@ class Application_Form_Inventory extends Zend_Form
 
 		# This should be a drop down based on the category table, right?	
 		$category = new Zend_Form_Element_Text('category');
-		$category->setLabel('category')
-			->setRequired(true)
-			->addFilter('StripTags')
-			->addFilter('StringTrim')
-			->addValidator('NotEmpty');
+		$category->setLabel('Category')
+			->addFilter('StringTrim');
 
 	$submit = new Zend_Form_Element_Submit('submit');
 	$submit->setAttrib('inv', 'submitbutton')

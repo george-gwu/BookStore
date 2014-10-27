@@ -70,10 +70,10 @@
          * @return type
          */
         public function getItemById($id){
-            $select = $this->select()->where ('ID = ?', (int)$id);
+            $select = $this->select()->where ('id = ?', (int)$id);
             $dbResult = $this->fetchRow($select);
             $data = array (
-                'itemID'            => $dbResult['ID'],
+                'itemID'            => $dbResult['id'],
                 'itemName'          => $dbResult['itemName'],
                 'itemDescription'   => $dbResult['itemDescription'],
                 'imageURL'          => $dbResult['imageURL'],

@@ -14,7 +14,9 @@ $this->headTitle($this->title);
                 <?php if(!empty($this->cartInfo[$item['pid']]['imageURL'])): ?>
                     <img src="<?= $this->cartInfo[$item['pid']]['imageURL']; ?>" align="left" width="25%" height="25%">
                 <?php endif; ?>
-                <b><?= $this->cartInfo[$item['pid']]['itemName']; ?></b><br>
+                <a href=" <?=$this->url(array('module' => 'default','controller'=>'item','action'=>'detail', 'pid'=>$item['pid']), null, TRUE); ?>">
+                    <b><?= $this->cartInfo[$item['pid']]['itemName']; ?></b>
+                </a><br>
                 <?= $this->cartInfo[$item['pid']]['itemDescription']; ?><br>
                 <?= ($this->cartInfo[$item['pid']]['quantity'] > 0) ? 'In Stock' : 'Backorder'; ?><br><br>
                 <small><a href="<?= $this->url(array('action'=>'delete','pid'=> $item['pid'])); ?>">Delete</a></small>

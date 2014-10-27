@@ -71,13 +71,10 @@ class ItemController extends Zend_Controller_Action
     }
     public function detailAction()
     {
-        $items = new Application_Model_DbTable_ItemBrowse();
-
-        $page = $this->_request->getParam('page');
-        if (empty($page)) { $page = 1; }
-
-        $paginator = $items->getItemDetail($page);
-        $this->view->paginator = $paginator;
+        $pid = $this->_request->getParam('pid');
+        
+        $inventoryDb = new Application_Model_DbTable_Inventories();
+        $this->view->item = $inventoryDb->getItemById($pid);
     }
     
 }

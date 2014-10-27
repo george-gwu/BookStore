@@ -2,32 +2,14 @@
 $this->title = "Item Details";
 $this->headTitle($this->title);
 
-//get item details
-$link = "$_SERVER[REQUEST_URI]";
-
-//get id from url
-$id = substr( $link, strrpos( $link, '/' )+1 );
-
 ?>
-
-<?php if (count($this->paginator)): ?>
-    <table>
-        <tr>
-
-            <th>Name</th>
-            <th>Price</th>
-            <th>&nbsp;</th>
-            <th>Item Details</th>
-        </tr>
-        <?php foreach($this->paginator as $item): ?>
-            <?php if ($item->id == $id): ?>
-                <tr>
-                    <td><?php echo $item->itemName;?></td>
-                    <td><?php echo $item->price;?></td>
-                    <td><?php echo '<a href="'.$this->url(array('module'=>'default','controller'=>'cart','action'=>'add','pid'=> $id), null, true); ?>">Add to Cart!</a></td>
-                    <td><?php echo $item->itemDescription;?></td>
-                </tr>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    </table>
+<?php if(!empty($this->item['imageURL'])): ?>
+    <img src="<?= $this->item['imageURL']; ?>" align="left" width="25%" height="25%">
 <?php endif; ?>
+<strong style="font-size:20px;"><?= $this->item['itemName'];?></strong><br>
+<b>Price:</b> <?= $this->item['price'];?><br>
+<b>Description:</b> <?= $this->item['itemDescription'];?><br>
+   
+<br>
+<center>
+<a href="<?= $this->url(array('module'=>'default','controller'=>'cart','action'=>'add','pid'=> $this->item['itemID']), null, true); ?>">Add to Cart!</a>

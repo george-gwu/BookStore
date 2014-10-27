@@ -15,7 +15,8 @@ class ReviewController extends Zend_Controller_Action
 
     public function reviewAction()
     {
-
+        $form = new Application_Form_Review();
+        $this->view->form = $form;
     }
 
 

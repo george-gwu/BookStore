@@ -10,16 +10,8 @@ class Application_Model_DbTable_Reviews extends Zend_Db_Table_Abstract
 {
 
     protected $_name = 'reviews';
+$firstName = new Zend_Form_Element_Text('firstName');
 
-    public function getReviews($itemID)
-    {
-
-    }
-
-    public function addReview($categoryName)
-    {
-
-    }
 
 
  //DROP TABLE IF EXISTS `bookstore`.`reviews`;

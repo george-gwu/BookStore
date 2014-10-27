@@ -31,6 +31,11 @@ class App_Cart implements Serializable  {
         $this->cartData = $this->cartData + $newCart->getRawCartDataForMerge();
         $this->persist();
     }
+    
+    public function clear(){
+        $this->cartData = array();
+        $this->persist();
+    }
      
    /**
      * Is Cart Empty

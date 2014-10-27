@@ -112,13 +112,31 @@ class User_IndexController extends Zend_Controller_Action
     
     public function checkoutReviewAction(){
         $customersDb = new Application_Model_DbTable_Customers();
-        $this->view->customerInfo = $customersDb->getCustomerInfo($this->user->id);        
-        
-        $cart = new App_Cart();
-        $this->view->cart = $cart;
-        
-        $inventoryDb = new Application_Model_DbTable_Inventories();
-        $this->view->cartInfo = $inventoryDb->getItemsById($cart->getItemIDsArray());
+        if (!$this->getRequest()->isPost()) {            
+            $this->view->customerInfo = $customersDb->getCustomerInfo($this->user->id);        
+
+            $cart = new App_Cart();
+            $this->view->cart = $cart;
+
+            $inventoryDb = new Application_Model_DbTable_Inventories();
+            $this->view->cartInfo = $inventoryDb->getItemsById($cart->getItemIDsArray());
+        } else {// order finalized
+            $cart = new App_Cart();
+            
+            $orderData = 'Customer Data' . print_r($customersDb->getCustomerInfo($this->user->id),1);
+            $orderData .= 'Payment Info' . print_r($customersDb->getCreditCard($this->user->id),1); //@TODO: unsecure
+            $orderData .= 'Cart' . print_r($cart->getItems(),1);
+                                  
+            $ordersDb = new Application_Model_DbTable_Orders();
+            $orderID = $ordersDb->createOrder($cart->serialize(), $this->user->id);
+            $orderFile = '/tmp/ORDER_'.$orderID.'.txt';
+            
+            file_put_contents($orderFile, $orderData);
+            
+            $ordersDb->updateOrderFileLocation($orderID, $orderFile);
+            
+            $this->_helper->redirector('order-complete', 'cart', 'default'); 
+        }
     }
 
     public function indexAction(){

@@ -19,6 +19,11 @@ class CartController extends Zend_Controller_Action
         
     }    
     
+    public function orderCompleteAction(){
+        $cart = new App_Cart();
+        $cart->clear();
+    }
+    
     public function addAction(){
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();

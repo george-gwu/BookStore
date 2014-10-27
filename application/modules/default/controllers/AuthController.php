@@ -59,9 +59,18 @@ class AuthController extends Zend_Controller_Action
                     
                     $this->_helper->layout()->disableLayout(); 
                     $this->_helper->viewRenderer->setNoRender(true);
-                    $this->_helper->getHelper('Redirector')->setCode(303)
-                        ->setExit(true)
-                        ->setGotoSimple('index', 'index', 'default');
+                    
+                    $next = $this->_getParam('next'); 
+                    
+                    if(empty($next)){                    
+                        $this->_helper->getHelper('Redirector')->setCode(303)
+                            ->setExit(true)
+                            ->setGotoSimple('index', 'index', 'default');
+                    } else {
+                       $this->_helper->getHelper('Redirector')->setCode(303)
+                            ->setExit(true)
+                            ->setGotoUrl($next); 
+                    }
                     
                 } else {
                     $form->getElement('password')->addErrors($result->getMessages());

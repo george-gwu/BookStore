@@ -2,3 +2,19 @@
 $this->title = "Welcome to Admin Inventory!";
 $this->headTitle($this->title);
 ?>
+<p><a href="<?php echo $this->url(array('action'=>'add'));?>">Add new item</a></p>
+<table>
+<tr>
+    <th>Item Name</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach($this->inventory as $inventory) : ?>
+<tr>
+    <td><?php echo $this->escape($inventory->itemName);?></td>
+    <td>
+        <a href="<?php echo $this->url(array('action'=>'edit', 'id'=>$inventory->itemID));?>">Edit</a>
+        <a href="<?php echo $this->url(array('action'=>'delete', 'id'=>$inventory->itemID));?>">Delete</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>

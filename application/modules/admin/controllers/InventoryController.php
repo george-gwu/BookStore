@@ -23,8 +23,8 @@ class Admin_InventoryController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $inventories = new Application_Model_DbTable_Inventories();
-        $this->view->inventories = $inventories->fetchAll();          
+        $inventory = new Application_Model_DbTable_Inventory();
+        $this->view->inventory = $inventory->fetchAll();          
     }
 
     public function addAction()
@@ -67,8 +67,8 @@ class Admin_InventoryController extends Zend_Controller_Action
                 $quantity = $form->getValue('quantity');
                 $category = $form->getValue('category');
                 
-                $inventoryDb = new Application_Model_DbTable_Inventories();
-                $inventoryDb->updateCategory($itemID, $itemName, $itemDescription, $price, $quantity, $category);
+                $inventoryDb = new Application_Model_DbTable_Inventory();
+                $inventoryDb->updateInventory($itemID, $itemName, $itemDescription, $price, $quantity, $category);
                 
                 $this->_helper->redirector('index');
             } else {
@@ -77,7 +77,7 @@ class Admin_InventoryController extends Zend_Controller_Action
         } else {
             $id = $this->_getParam('id', 0);
             if ($id > 0) {
-                $inventoryDb = new Application_Model_DbTable_Inventories();
+                $inventoryDb = new Application_Model_DbTable_Inventory();
                 $form->populate($inventoryDb->getInventory($itemID));
             }
         }
@@ -91,12 +91,12 @@ class Admin_InventoryController extends Zend_Controller_Action
                 $itemID = $this->getRequest()->getParam('itemID');
                 
                 $inventoryDb = new Application_Model_DbTable_Inventories();
-                $inventoryDb->deleteCategory($itemID);
+                $inventoryDb->deleteInventory($itemID);
             }
             $this->_helper->redirector('index');
         } else {
             $itemID = $this->_getParam('itemID', 0);
-            $inventoryDb = new Application_Model_DbTable_Inventories();
+            $inventoryDb = new Application_Model_DbTable_Inventory();
             $this->view->inventory = $inventoryDb->getInventory($itemID);
         }
     }

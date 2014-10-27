@@ -27,9 +27,12 @@ class App_Controller_Plugin_ACL extends Zend_Controller_Plugin_Abstract {
             }
         } else {
             if(!$acl->isAllowed($this->_defaultRole, $request->getModuleName())) {
-                $session->destination_url = $request->getPathInfo();
-                    die('pleaselogin');
-                return Zend_Controller_Action_HelperBroker::getStaticHelper('redirector')->setGotoSimple('login', 'auth', 'default');
+       
+                $this->_request->setModuleName('default');
+                $this->_request->setControllerName('auth');
+                $this->_request->setActionName('login');
+                $this->_request->setParam('next', $request->getPathInfo());
+                
             }
         }
     }

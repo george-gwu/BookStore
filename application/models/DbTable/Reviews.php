@@ -10,7 +10,13 @@ class Application_Model_DbTable_Reviews extends Zend_Db_Table_Abstract
 {
 
     protected $_name = 'reviews';
-$firstName = new Zend_Form_Element_Text('firstName');
+
+    public function getReviewsByItem($itemID)
+    {
+        $query = $this->select()->order('$itemID ASC');
+        $data = new Zend_Paginator_Adapter_DbTableSelect($query);
+        return $data;
+    }
 
 
 

@@ -11,7 +11,10 @@ class Application_Form_Review extends Zend_Form
     {
         $this->setName('review');
 
-        $firstName = new Zend_Form_Element_Text('firstName');
+        $reviewHeader = new Zend_Form_Element_Note("Customer Reviews");
+        $reviewHeader->setLabel('Customer Reviews');
+
+        $this->addElement($reviewHeader);
 
     }
 }

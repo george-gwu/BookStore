@@ -17,6 +17,13 @@ class ReviewController extends Zend_Controller_Action
     {
         $form = new Application_Form_Review();
         $this->view->form = $form;
+
+
+        $pid = $this->_request->getParam('pid');
+
+        $reviewDb = new Application_Model_DbTable_Reviews();
+        $this->view->item = $reviewDb->getReviewsByItem($pid);
+
     }
 
 

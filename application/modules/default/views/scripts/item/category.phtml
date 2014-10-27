@@ -23,7 +23,7 @@ $this->headTitle($this->title);
 
             <tr>
                 <td><?php echo $item->itemName;?></td>
-                <td><?php echo '<a href="'.$this->url(array('module' => 'default','controller'=>'item','action'=>'detail',$item->id), null, TRUE);?>">Details</a></td>
+                <td><?php echo '<a href="'.$this->url(array('module' => 'default','controller'=>'item','action'=>'detail','pid'=>$item->id), null, TRUE);?>">Details</a></td>
                 <td><?php echo $item->price;?></td>
                 <td><?php echo '<a href="'.$this->url(array('module'=>'default','controller'=>'cart','action'=>'add','pid'=>$item->id), null, true); ?>">Add to Cart!</a></td>
                 <td><?php echo $item->categoryID;?></td>

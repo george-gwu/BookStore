@@ -29,7 +29,7 @@ class Admin_InventoryController extends Zend_Controller_Action
 
     public function addAction()
     {
-        $form = new Inventory_Update_Form();
+        $form = new Application_Form_Inventory();
         $form->submit->setLabel('Add');
         $this->view->form = $form;
         
@@ -53,7 +53,7 @@ class Admin_InventoryController extends Zend_Controller_Action
 
     public function editAction()
     {
-        $form = new Inventory_Update_Form();
+        $form = new Application_Form_Inventory();
         $form->submit->setLabel('Save');
         $this->view->form = $form;
         

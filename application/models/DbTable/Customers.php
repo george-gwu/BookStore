@@ -68,6 +68,30 @@ class Application_Model_DbTable_Customers extends Zend_Db_Table_Abstract
         $this->update($data, $where);
     }
     
+    
+    public function getCustomerInfo($userID){
+        $select = $this->select()->where('id = ?', $userID);
+
+	$dbResult = $this->fetchRow($select);        
+        $cryptFilter = $this->_getDecryptFilter($dbResult['encryptVector']);
+        
+        
+        
+        $data = $dbResult->toArray();
+        $data['cardLastFour'] = substr($cryptFilter->filter($dbResult['encryptedCardNumber']), -4);
+        
+        unset(  $data['encryptedCardName'], 
+                $data['encryptedCardNumber'], 
+                $data['encryptedCardExpiration'], 
+                $data['encryptedCardSecurityCode'],
+                $data['encryptVector'], 
+                $data['password'], 
+                $data['cartData']
+            );
+                
+        return $data;
+    }
+    
     /**
      *
      * @param type $userID userID 

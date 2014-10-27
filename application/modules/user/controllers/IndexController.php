@@ -36,6 +36,91 @@ class User_IndexController extends Zend_Controller_Action
         }         
     }
 
+    
+    public function checkoutAction(){
+        $shippingAddressForm = $this->view->form = new Application_Form_Address();
+        $shippingAddressForm->submit->setLabel('Continue');
+        $customersDb = new Application_Model_DbTable_Customers();
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+            if ($shippingAddressForm->isValid($formData)) {              
+                $customersDb->updateAddress($this->user->id, 
+                                            'SHIPPING',
+                                            $shippingAddressForm->getValue('address1'), 
+                                            $shippingAddressForm->getValue('address2'), 
+                                            $shippingAddressForm->getValue('city'), 
+                                            $shippingAddressForm->getValue('state'),                        
+                                            $shippingAddressForm->getValue('country'), 
+                                            $shippingAddressForm->getValue('zipcode') 
+                                        );       
+                $this->_helper->redirector('checkout-billing', 'index', 'user'); 
+            } else {
+                $shippingAddressForm->populate($formData);
+            }
+        }  else {
+            $shippingAddressForm->populate($customersDb->getShippingAddress($this->user->id));
+        }
+    }
+    
+    public function checkoutBillingAction(){
+        $billingAddessForm = $this->view->form = new Application_Form_Address();
+        $billingAddessForm->submit->setLabel('Continue');
+        $customersDb = new Application_Model_DbTable_Customers();
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+            if ($billingAddessForm->isValid($formData)) {              
+                $customersDb->updateAddress($this->user->id, 
+                                            'BILLING',
+                                            $billingAddessForm->getValue('address1'), 
+                                            $billingAddessForm->getValue('address2'), 
+                                            $billingAddessForm->getValue('city'), 
+                                            $billingAddessForm->getValue('state'),                        
+                                            $billingAddessForm->getValue('country'), 
+                                            $billingAddessForm->getValue('zipcode') 
+                                        );       
+                $this->_helper->redirector('checkout-credit', 'index', 'user'); 
+            } else {
+                $billingAddessForm->populate($formData);
+            }
+        }  else {
+            $billingAddessForm->populate($customersDb->getBillingAddress($this->user->id));
+        }
+    }
+    
+    public function checkoutCreditAction(){
+        $creditCardForm = $this->view->form = new Application_Form_CreditCard();
+        $creditCardForm->submit->setLabel('Continue');
+        $customersDb = new Application_Model_DbTable_Customers();
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+            if ($creditCardForm->isValid($formData)) {              
+                    $customersDb->updateCreditCard( $this->user->id, 
+                                                $creditCardForm->getValue('cardname'), 
+                                                $creditCardForm->getValue('cardnumber'), 
+                                                $creditCardForm->getValue('cardexpiration'), 
+                                                $creditCardForm->getValue('cardsecurity')
+                                            );                                
+                    $this->_helper->redirector('checkout-review', 'index', 'user');                 
+                                
+            } else {
+                $creditCardForm->populate($formData);
+            }
+        }  else {
+            $creditCardForm->populate($customersDb->getCreditCard($this->user->id));
+        }
+    }
+    
+    public function checkoutReviewAction(){
+        $customersDb = new Application_Model_DbTable_Customers();
+        $this->view->customerInfo = $customersDb->getCustomerInfo($this->user->id);        
+        
+        $cart = new App_Cart();
+        $this->view->cart = $cart;
+        
+        $inventoryDb = new Application_Model_DbTable_Inventories();
+        $this->view->cartInfo = $inventoryDb->getItemsById($cart->getItemIDsArray());
+    }
+
     public function indexAction(){
         $customersDb = new Application_Model_DbTable_Customers();
         $this->view->fullName = $this->user->firstName .' '. $this->user->lastName;

@@ -11,6 +11,9 @@ $this->headTitle($this->title);
     <?php foreach($this->cart->getItems() as $item): ?>
         <tr>
             <td>
+                <?php if(!empty($this->cartInfo[$item['pid']]['imageURL'])): ?>
+                    <img src="<?= $this->cartInfo[$item['pid']]['imageURL']; ?>" align="left" width="25%" height="25%">
+                <?php endif; ?>
                 <b><?= $this->cartInfo[$item['pid']]['itemName']; ?></b><br>
                 <?= $this->cartInfo[$item['pid']]['itemDescription']; ?><br>
                 <?= ($this->cartInfo[$item['pid']]['quantity'] > 0) ? 'In Stock' : 'Backorder'; ?><br><br>
@@ -31,7 +34,3 @@ $this->headTitle($this->title);
     <?php endforeach; ?>
     </table>
 <?php endif; ?>
-    <BR>
-    <BR>DEBUG: <a href="<?= $this->url(array('module'=>'default','controller'=>'cart','action'=>'add','pid'=> 1), null, true); ?>">Add an item!</a>
-    
-    
